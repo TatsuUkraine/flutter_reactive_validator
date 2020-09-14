@@ -1,4 +1,4 @@
-library flutter_stream_validator;
+library stream_validator;
 
 export 'contracts/validator.dart';
 export 'contracts/validation_connector.dart';
