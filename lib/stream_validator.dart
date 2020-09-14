@@ -5,7 +5,7 @@ export 'contracts/validation_connector.dart';
 export 'contracts/validation_controller.dart';
 
 export 'stream_validation_connector.dart';
-export 'stream_validation_controller.dart';
+export 'subject_stream_validation_controller.dart';
 
 export 'validators/field_validator.dart';
 export 'validators/group_validator.dart';

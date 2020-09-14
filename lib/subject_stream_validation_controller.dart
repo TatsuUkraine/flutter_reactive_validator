@@ -14,15 +14,15 @@ import 'contracts/validation_controller.dart';
 ///
 /// Which means that all streams, that provided by this controller, will emit last value
 /// to the listeners as soon as they subscribe.
-class SubjectValidationController<K> implements ValidationController<K> {
+class SubjectStreamValidationController<K> implements ValidationController<K> {
   final BehaviorSubject<Map<K, String>> streamController;
 
   List<ValidationConnector<K,Object>> _connectors = [];
 
-  SubjectValidationController()
+  SubjectStreamValidationController()
       : streamController = BehaviorSubject<Map<K, String>>();
 
-  SubjectValidationController.seeded(Map<K, String> errors)
+  SubjectStreamValidationController.seeded(Map<K, String> errors)
       : streamController = BehaviorSubject<Map<K, String>>.seeded(errors);
 
   @override
