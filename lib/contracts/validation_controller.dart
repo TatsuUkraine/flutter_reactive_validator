@@ -1,3 +1,5 @@
+import 'package:stream_validator/contracts/error_provider.dart';
+
 import 'validation_connector.dart';
 
 abstract class ValidationController<K> {
@@ -9,6 +11,12 @@ abstract class ValidationController<K> {
 
   /// Remove [ValidationConnector]
   void removeConnector(ValidationConnector<K, Object> connector);
+
+  /// Provides [ErrorProvider] with validation error value and stream
+  /// for particular field.
+  ///
+  /// [ErrorProvider.value] gives sync access to current validation error
+  ErrorProvider<K> fieldErrorProvider(K field);
 
   /// Provides [Stream] with validation errors for particular field
   Stream<String> fieldErrorStream(K field);

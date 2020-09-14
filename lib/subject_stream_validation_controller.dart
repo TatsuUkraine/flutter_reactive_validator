@@ -1,4 +1,6 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:stream_validator/contracts/error_provider.dart';
+import 'package:stream_validator/mapped_value_error_provider.dart';
 
 import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
@@ -24,6 +26,10 @@ class SubjectStreamValidationController<K> implements ValidationController<K> {
 
   SubjectStreamValidationController.seeded(Map<K, String> errors)
       : streamController = BehaviorSubject<Map<K, String>>.seeded(errors);
+
+  @override
+  ErrorProvider<K> fieldErrorProvider(K field) =>
+      MappedValueErrorProvider<K>(field, streamController.stream);
 
   @override
   Stream<String> fieldErrorStream(K field) => errorsStream
