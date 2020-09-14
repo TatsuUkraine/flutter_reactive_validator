@@ -7,8 +7,8 @@ class MaxLengthValidator extends FieldValidator<String> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'length should be less than $max',
-    isValid: (value) => value.length < max,
+    errorMessage: errorMessage ?? 'can contain maximum $max symbols',
+    isValid: (value) => value.length <= max,
   );
 
   MaxLengthValidator.withMessage(
@@ -16,6 +16,6 @@ class MaxLengthValidator extends FieldValidator<String> {
     String message
   )   : super.withMessage(
     message: message,
-    isValid: (value) => value.length < max,
+    isValid: (value) => value.length <= max,
   );
 }

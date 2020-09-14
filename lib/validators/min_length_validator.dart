@@ -7,8 +7,8 @@ class MinLengthValidator extends FieldValidator<String> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'length should be greater than $min',
-    isValid: (value) => value.length > min,
+    errorMessage: errorMessage ?? 'should contain at least $min symbols',
+    isValid: (value) => value.length >= min,
   );
 
   MinLengthValidator.withMessage(
@@ -16,6 +16,6 @@ class MinLengthValidator extends FieldValidator<String> {
     String message
   )   : super.withMessage(
     message: message,
-    isValid: (value) => value.length > min,
+    isValid: (value) => value.length >= min,
   );
 }
