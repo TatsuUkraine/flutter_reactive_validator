@@ -5,6 +5,9 @@ abstract class ErrorProvider<K> {
   /// Current validation error value
   String get value;
 
+  /// If provider has an error message
+  bool get hasValue;
+
   /// Validation error stream
   Stream<String> get stream;
 }

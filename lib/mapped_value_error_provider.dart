@@ -14,6 +14,9 @@ class MappedValueErrorProvider<K> implements ErrorProvider<K> {
   String get value => _transform(_valueStream.value);
 
   @override
+  bool get hasValue => _valueStream.value != null;
+
+  @override
   Stream<String> get stream {
     if (_valueStream.hasValue) {
       return _valueStream.skip(1).map(_transform);
