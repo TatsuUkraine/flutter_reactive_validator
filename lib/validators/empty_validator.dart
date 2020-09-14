@@ -1,5 +1,5 @@
+import 'custom_validator.dart';
 import '../contracts/validator.dart';
-import 'field_validator.dart';
 
 /// Checks value on `isEmpty`
 class EmptyValidator {
@@ -9,7 +9,7 @@ class EmptyValidator {
   static Validator<String> string({
     String fieldName,
     String errorMessage,
-  }) => FieldValidator<String>(
+  }) => CustomValidator<String>(
     fieldName: fieldName,
     errorMessage: errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
@@ -17,8 +17,8 @@ class EmptyValidator {
 
   /// Checks if string is not empty. Defines full error message
   static Validator<String> stringWithMessage(String message) =>
-      FieldValidator<String>.withMessage(
-        message: message,
+      CustomValidator<String>.withMessage(
+        message: (_) => message,
         isValid: (value) => value.isEmpty,
       );
 
@@ -26,7 +26,7 @@ class EmptyValidator {
   static Validator<Iterable<I>> iterable<I>({
     String fieldName,
     String errorMessage,
-  }) => FieldValidator<Iterable<I>>(
+  }) => CustomValidator<Iterable<I>>(
     fieldName: fieldName,
     errorMessage: errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
@@ -34,8 +34,8 @@ class EmptyValidator {
 
   /// Checks if [Iterable] is not empty. Defines full error message
   static Validator<Iterable<I>> iterableWithMessage<I>(String message) =>
-      FieldValidator<Iterable<I>>.withMessage(
-        message: message,
+      CustomValidator<Iterable<I>>.withMessage(
+        message: (_) => message,
         isValid: (value) => value.isEmpty,
       );
 
@@ -43,7 +43,7 @@ class EmptyValidator {
   static Validator<Map<K,V>> map<K,V>({
     String fieldName,
     String errorMessage,
-  }) => FieldValidator<Map<K,V>>(
+  }) => CustomValidator<Map<K,V>>(
     fieldName: fieldName,
     errorMessage: errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
@@ -51,8 +51,8 @@ class EmptyValidator {
 
   /// Checks if [Iterable] is not empty. Defines full error message
   static Validator<Map<K,V>> mapWithMessage<K,V>(String message) =>
-      FieldValidator<Map<K,V>>.withMessage(
-        message: message,
+      CustomValidator<Map<K,V>>.withMessage(
+        message: (_) => message,
         isValid: (value) => value.isEmpty,
       );
 }
