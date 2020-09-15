@@ -1,5 +1,6 @@
 import 'field_validator.dart';
 
+/// Validate value against regexp
 class RegexpValidator extends FieldValidator<String> {
   final RegExp regExp;
 

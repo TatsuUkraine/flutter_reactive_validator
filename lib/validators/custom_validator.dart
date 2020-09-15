@@ -5,6 +5,12 @@ import '../contracts/validator.dart';
 typedef bool _Validator<I>(I value);
 typedef String _MessageBuilder<I>(I value);
 
+/// Custom validator. Allows to define validation with
+/// [CustomValidator.isValid] callback.
+///
+/// Can be defined or with field name and error message within default constructor
+/// or with [CustomValidator.message] callback to generate error message during the
+/// validation
 class CustomValidator<I> implements Validator<I> {
 
   /// Validation message callback

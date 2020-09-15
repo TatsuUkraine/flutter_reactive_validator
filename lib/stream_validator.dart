@@ -9,6 +9,7 @@ export 'stream_validation_connector.dart';
 export 'subject_stream_validation_controller.dart';
 
 export 'validators/field_validator.dart';
+export 'validators/custom_validator.dart';
 export 'validators/group_validator.dart';
 export 'validators/email_validator.dart';
 export 'validators/equal_to_validator.dart';
@@ -23,3 +24,6 @@ export 'validators/empty_validator.dart';
 export 'validators/not_empty_validator.dart';
 export 'validators/null_validator.dart';
 export 'validators/not_null_validator.dart';
+export 'validators/regexp_validator.dart';
+export 'validators/after_date_time_validator.dart';
+export 'validators/before_date_time_validator.dart';
