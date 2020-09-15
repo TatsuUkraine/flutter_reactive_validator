@@ -4,11 +4,11 @@ import 'equal_to_validator.dart';
 class NullValidator extends EqualToValidator<Object> {
   NullValidator({
     String fieldName,
-    String errorMessage,
+    String message,
   })  : super(
     null,
     fieldName: fieldName,
-    errorMessage: errorMessage,
+    message: message,
   );
 
   NullValidator.withMessage(String message)

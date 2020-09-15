@@ -11,7 +11,7 @@ class EmptyValidator {
     String errorMessage,
   }) => CustomValidator<String>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
   );
 
@@ -28,7 +28,7 @@ class EmptyValidator {
     String errorMessage,
   }) => CustomValidator<Iterable<I>>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
   );
 
@@ -45,7 +45,7 @@ class EmptyValidator {
     String errorMessage,
   }) => CustomValidator<Map<K,V>>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => errorMessage ?? _defaultErrorMessage,
     isValid: (value) => value.isEmpty,
   );
 

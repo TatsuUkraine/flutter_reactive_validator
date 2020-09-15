@@ -6,10 +6,10 @@ class EqualToValidator<I> extends FieldValidator<I> {
 
   EqualToValidator(this.equalTo, {
     String fieldName,
-    String errorMessage,
+    String message,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'should be equal to $equalTo',
+    message: message ?? 'should be equal to $equalTo',
     ignoreNullable: false,
   );
 

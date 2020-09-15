@@ -4,11 +4,11 @@ import 'not_equal_to_validator.dart';
 class NotNullValidator extends NotEqualToValidator<Object> {
   NotNullValidator({
     String fieldName,
-    String errorMessage = 'can\'t be null',
+    String message = 'can\'t be null',
   })  : super(
     null,
     fieldName: fieldName,
-    errorMessage: errorMessage,
+    message: message,
   );
 
   NotNullValidator.withMessage(String message)

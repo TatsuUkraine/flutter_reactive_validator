@@ -9,7 +9,7 @@ class GreaterThanOrEqualValidator<I extends num> extends FieldValidator<I> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'should be greater than or equal to $min',
+    message: errorMessage ?? 'should be greater than or equal to $min',
   );
 
   GreaterThanOrEqualValidator.withMessage(

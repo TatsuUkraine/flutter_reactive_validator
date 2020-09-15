@@ -8,10 +8,10 @@ class NotEmptyValidator {
   /// Checks if string is not empty
   static Validator<String> string({
     String fieldName,
-    String errorMessage,
+    String message,
   }) => CustomValidator<String>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => message ?? _defaultErrorMessage,
     isValid: (value) => value.isNotEmpty,
   );
 
@@ -25,10 +25,10 @@ class NotEmptyValidator {
   /// Checks if [Iterable] is not empty
   static Validator<Iterable<I>> iterable<I>({
     String fieldName,
-    String errorMessage,
+    String message,
   }) => CustomValidator<Iterable<I>>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => message ?? _defaultErrorMessage,
     isValid: (value) => value.isNotEmpty,
   );
 
@@ -42,10 +42,10 @@ class NotEmptyValidator {
   /// Checks if [Map] is not empty
   static Validator<Map<K,V>> map<K,V>({
     String fieldName,
-    String errorMessage,
+    String message,
   }) => CustomValidator<Map<K,V>>(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? _defaultErrorMessage,
+    message: (_) => message ?? _defaultErrorMessage,
     isValid: (value) => value.isNotEmpty,
   );
 

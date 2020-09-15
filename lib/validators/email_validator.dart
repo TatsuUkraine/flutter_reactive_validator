@@ -14,7 +14,7 @@ class EmailValidator extends FieldValidator<String> {
     this.allowInternational = true,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'value should be a valid email',
+    message: errorMessage ?? 'value should be a valid email',
   );
 
   EmailValidator.withMessage(String message, {

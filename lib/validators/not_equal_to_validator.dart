@@ -6,10 +6,10 @@ class NotEqualToValidator<I> extends FieldValidator<I> {
 
   NotEqualToValidator(this.equalTo, {
     String fieldName,
-    String errorMessage,
+    String message,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'shouldn\'t be equal to $equalTo',
+    message: message ?? 'shouldn\'t be equal to $equalTo',
     ignoreNullable: false,
   );
 

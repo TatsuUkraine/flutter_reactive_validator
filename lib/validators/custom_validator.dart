@@ -27,13 +27,13 @@ class CustomValidator<I> implements Validator<I> {
 
   CustomValidator({
     String fieldName,
-    @required String errorMessage,
+    @required _MessageBuilder<I> message,
     @required _Validator<I> isValid,
     bool ignoreNullable = true,
   }): this.withMessage(
     isValid: isValid,
     ignoreNullable: ignoreNullable,
-    message: (_) => '${fieldName ?? 'Field'} $errorMessage',
+    message: (value) => '${fieldName ?? 'Field'} ${message(value)}',
   );
 
   CustomValidator.withMessage({

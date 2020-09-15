@@ -6,17 +6,7 @@ import '../contracts/validator.dart';
 ///
 /// Can be used to define custom validators
 abstract class FieldValidator<I> implements Validator<I> {
-  /// Field name.
-  ///
-  /// Default to `Field`
-  final String fieldName;
-
-  /// Validation message for provided [fieldName]
-  final String errorMessage;
-
-  /// Full validation message.
-  ///
-  /// If provided, [fieldName] and [errorMessage] will be ignored
+  /// Validation error message.
   final String message;
 
   /// If validation can be invoked on `null` values.
@@ -25,28 +15,24 @@ abstract class FieldValidator<I> implements Validator<I> {
   /// except couple of validators
   final bool ignoreNullable;
 
-  /// Defines [fieldName] and [errorMessage] that will be used
-  /// to generate validation error message if validation fails
+  /// Defines [fieldName] and [message] that will be used
+  /// to generate validation error message if validation fails.
   FieldValidator({
-    this.fieldName,
-    @required this.errorMessage,
+    String fieldName,
+    @required String message,
     this.ignoreNullable = true,
-  })  : message = null;
+  })  : message = '${fieldName ?? 'Field'} $message';
 
-  /// Defines validation message if validation fails
+  /// Defines full validation message if validation fails.
   FieldValidator.withMessage({
     @required this.message,
     this.ignoreNullable = true,
-  })  : assert(message != null),
-        errorMessage = null,
-        fieldName = null;
-
-  String get _fieldName => fieldName ?? 'Field';
+  })  : assert(message != null);
 
   @override
   String call(I value) => ignoreNullable && value == null || isValid(value)
       ? null
-      : message ?? '$_fieldName $errorMessage';
+      : message;
 
   /// Validation function
   bool isValid(I value);

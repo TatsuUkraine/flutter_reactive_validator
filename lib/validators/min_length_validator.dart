@@ -9,7 +9,7 @@ class MinLengthValidator extends FieldValidator<String> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'should contain minimum $min characters',
+    message: errorMessage ?? 'should contain minimum $min characters',
   );
 
   MinLengthValidator.withMessage(
