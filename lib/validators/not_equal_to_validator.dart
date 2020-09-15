@@ -2,24 +2,26 @@ import 'field_validator.dart';
 
 /// Defines if field value not equal to provided value.
 class NotEqualToValidator<I> extends FieldValidator<I> {
+  final I equalTo;
 
-  NotEqualToValidator(I equalTo, {
+  NotEqualToValidator(this.equalTo, {
     String fieldName,
     String errorMessage,
   })  : super(
     fieldName: fieldName,
     errorMessage: errorMessage ?? 'shouldn\'t be equal to $equalTo',
-    isValid: (value) => value == equalTo,
     ignoreNullable: false,
   );
 
 
   NotEqualToValidator.withMessage(
-    I equalTo,
+    this.equalTo,
     String message
   )   : super.withMessage(
     message: message,
-    isValid: (value) => value == equalTo,
     ignoreNullable: false,
   );
+
+  @override
+  bool isValid(I value) => value == equalTo;
 }

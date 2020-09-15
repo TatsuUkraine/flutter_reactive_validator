@@ -2,20 +2,23 @@ import 'field_validator.dart';
 
 /// Check if field [String] value longer than some length
 class MinLengthValidator extends FieldValidator<String> {
-  MinLengthValidator(int min, {
+  final int min;
+
+  MinLengthValidator(this.min, {
     String fieldName,
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    errorMessage: errorMessage ?? 'should contain at least $min symbols',
-    isValid: (value) => value.length >= min,
+    errorMessage: errorMessage ?? 'should contain minimum $min characters',
   );
 
   MinLengthValidator.withMessage(
-    int min,
+    this.min,
     String message
   )   : super.withMessage(
     message: message,
-    isValid: (value) => value.length >= min,
   );
+
+  @override
+  bool isValid(String value) => value.length >= min;
 }

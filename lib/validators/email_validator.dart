@@ -4,30 +4,30 @@ import 'package:email_validator/email_validator.dart' as v;
 /// Validator for email value. Backed with `email_validator` package to provide
 /// proper validation.
 class EmailValidator extends FieldValidator<String> {
+  final bool allowTopLevelDomains;
+  final bool allowInternational;
+
   EmailValidator({
     String fieldName,
     String errorMessage,
-    bool allowTopLevelDomains = false,
-    bool allowInternational = true,
+    this.allowTopLevelDomains = false,
+    this.allowInternational = true,
   })  : super(
     fieldName: fieldName,
     errorMessage: errorMessage ?? 'value should be a valid email',
-    isValid: (value) => v.EmailValidator.validate(
-      value,
-      allowTopLevelDomains,
-      allowInternational
-    ),
   );
 
   EmailValidator.withMessage(String message, {
-    bool allowTopLevelDomains = false,
-    bool allowInternational = true,
+    this.allowTopLevelDomains = false,
+    this.allowInternational = true,
   })  : super.withMessage(
     message: message,
-    isValid: (value) => v.EmailValidator.validate(
-      value,
-      allowTopLevelDomains,
-      allowInternational
-    ),
+  );
+
+  @override
+  bool isValid(value) => v.EmailValidator.validate(
+    value,
+    allowTopLevelDomains,
+    allowInternational
   );
 }
