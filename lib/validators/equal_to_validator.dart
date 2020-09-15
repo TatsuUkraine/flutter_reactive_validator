@@ -4,7 +4,7 @@ import 'field_validator.dart';
 class EqualToValidator<I> extends FieldValidator<I> {
   final I equalTo;
 
-  EqualToValidator(this.equalTo, {
+  const EqualToValidator(this.equalTo, {
     String fieldName,
     String message,
   })  : super(
@@ -13,7 +13,7 @@ class EqualToValidator<I> extends FieldValidator<I> {
     ignoreNullable: false,
   );
 
-  EqualToValidator.withMessage(
+  const EqualToValidator.withMessage(
     this.equalTo,
     String message
   )   : super.withMessage(

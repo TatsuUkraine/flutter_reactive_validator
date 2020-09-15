@@ -36,7 +36,7 @@ class CustomValidator<I> implements Validator<I> {
     message: (value) => '${fieldName ?? 'Field'} ${message(value)}',
   );
 
-  CustomValidator.withMessage({
+  const CustomValidator.withMessage({
     @required this.message,
     @required this.isValid,
     this.ignoreNullable = true,

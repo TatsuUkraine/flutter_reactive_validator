@@ -4,7 +4,7 @@ import 'field_validator.dart';
 class NotEqualToValidator<I> extends FieldValidator<I> {
   final I equalTo;
 
-  NotEqualToValidator(this.equalTo, {
+  const NotEqualToValidator(this.equalTo, {
     String fieldName,
     String message,
   })  : super(
@@ -14,7 +14,7 @@ class NotEqualToValidator<I> extends FieldValidator<I> {
   );
 
 
-  NotEqualToValidator.withMessage(
+  const NotEqualToValidator.withMessage(
     this.equalTo,
     String message
   )   : super.withMessage(

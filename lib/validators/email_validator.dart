@@ -7,7 +7,7 @@ class EmailValidator extends FieldValidator<String> {
   final bool allowTopLevelDomains;
   final bool allowInternational;
 
-  EmailValidator({
+  const EmailValidator({
     String fieldName,
     String errorMessage,
     this.allowTopLevelDomains = false,
@@ -17,7 +17,7 @@ class EmailValidator extends FieldValidator<String> {
     message: errorMessage ?? 'value should be a valid email',
   );
 
-  EmailValidator.withMessage(String message, {
+  const EmailValidator.withMessage(String message, {
     this.allowTopLevelDomains = false,
     this.allowInternational = true,
   })  : super.withMessage(

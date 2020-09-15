@@ -4,7 +4,7 @@ import 'field_validator.dart';
 class GreaterThanOrEqualValidator<I extends num> extends FieldValidator<I> {
   final I min;
 
-  GreaterThanOrEqualValidator(this.min, {
+  const GreaterThanOrEqualValidator(this.min, {
     String fieldName,
     String errorMessage,
   })  : super(
@@ -12,7 +12,7 @@ class GreaterThanOrEqualValidator<I extends num> extends FieldValidator<I> {
     message: errorMessage ?? 'should be greater than or equal to $min',
   );
 
-  GreaterThanOrEqualValidator.withMessage(
+  const GreaterThanOrEqualValidator.withMessage(
     this.min,
     String message
   )   : super.withMessage(

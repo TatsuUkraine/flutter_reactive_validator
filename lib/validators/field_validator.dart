@@ -17,14 +17,14 @@ abstract class FieldValidator<I> implements Validator<I> {
 
   /// Defines [fieldName] and [message] that will be used
   /// to generate validation error message if validation fails.
-  FieldValidator({
+  const FieldValidator({
     String fieldName,
     @required String message,
     this.ignoreNullable = true,
   })  : message = '${fieldName ?? 'Field'} $message';
 
   /// Defines full validation message if validation fails.
-  FieldValidator.withMessage({
+  const FieldValidator.withMessage({
     @required this.message,
     this.ignoreNullable = true,
   })  : assert(message != null);

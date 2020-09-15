@@ -14,7 +14,7 @@ class BeforeDateTimeValidator extends FieldValidator<DateTime> {
     message: errorMessage ?? 'should be before ${formatter?.call(dateTime) ?? dateTime}',
   );
 
-  BeforeDateTimeValidator.withMessage(
+  const BeforeDateTimeValidator.withMessage(
     this.dateTime,
     String message,
   ) : formatter = null,

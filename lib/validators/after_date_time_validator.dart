@@ -14,7 +14,7 @@ class AfterDateTimeValidator extends FieldValidator<DateTime> {
     message: errorMessage ?? 'should be after ${formatter?.call(dateTime) ?? dateTime}',
   );
 
-  AfterDateTimeValidator.withMessage(
+  const AfterDateTimeValidator.withMessage(
     this.dateTime,
     String message
   ) : formatter = null,

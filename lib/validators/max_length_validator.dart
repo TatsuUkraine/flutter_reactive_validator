@@ -4,7 +4,7 @@ import 'field_validator.dart';
 class MaxLengthValidator extends FieldValidator<String> {
   final int max;
 
-  MaxLengthValidator(this.max, {
+  const MaxLengthValidator(this.max, {
     String fieldName,
     String errorMessage,
   })  : super(
@@ -12,7 +12,7 @@ class MaxLengthValidator extends FieldValidator<String> {
     message: errorMessage ?? 'should contain maximum $max characters',
   );
 
-  MaxLengthValidator.withMessage(
+  const MaxLengthValidator.withMessage(
     this.max,
     String message
   )   : super.withMessage(

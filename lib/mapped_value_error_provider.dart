@@ -8,7 +8,7 @@ class MappedValueErrorProvider<K> implements ErrorProvider<K> {
 
   final ValueStream<Map<K, String>> _valueStream;
 
-  MappedValueErrorProvider(this.field, this._valueStream);
+  const MappedValueErrorProvider(this.field, this._valueStream);
 
   @override
   String get value => _transform(_valueStream.value);

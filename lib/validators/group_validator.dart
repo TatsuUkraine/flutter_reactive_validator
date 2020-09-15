@@ -6,10 +6,10 @@ import '../contracts/validator.dart';
 ///
 /// All [Validator]'s should be designed to validate same value type.
 class GroupValidator<I> implements Validator<I> {
-  final List<Validator<I>> validators;
+  final Iterable<Validator<I>> validators;
 
-  GroupValidator(this.validators)
-      : assert(validators != null && validators.isNotEmpty);
+  const GroupValidator(this.validators)
+      : assert(validators != null);
 
   @override
   String call(I value) {

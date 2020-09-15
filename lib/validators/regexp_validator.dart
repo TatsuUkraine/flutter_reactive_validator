@@ -12,7 +12,7 @@ class RegexpValidator extends FieldValidator<String> {
     message: errorMessage ?? 'doesn\'t match to ${regExp.pattern}',
   );
 
-  RegexpValidator.withMessage(
+  const RegexpValidator.withMessage(
     this.regExp,
     String message
   )   : super.withMessage(
