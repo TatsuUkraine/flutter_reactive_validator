@@ -26,4 +26,15 @@ class MappedValueErrorProvider<K> implements ErrorProvider<K> {
   }
 
   String _transform(Map<K, String> errors) => (errors ?? {})[field];
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MappedValueErrorProvider<K> &&
+          runtimeType == other.runtimeType &&
+          field == other.field &&
+          _valueStream == other._valueStream;
+
+  @override
+  int get hashCode => field.hashCode ^ _valueStream.hashCode;
 }

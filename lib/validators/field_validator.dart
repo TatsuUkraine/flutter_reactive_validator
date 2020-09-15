@@ -36,4 +36,15 @@ abstract class FieldValidator<I> implements Validator<I> {
 
   /// Validation function
   bool isValid(I value);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FieldValidator<I> &&
+          runtimeType == other.runtimeType &&
+          message == other.message &&
+          ignoreNullable == other.ignoreNullable;
+
+  @override
+  int get hashCode => message.hashCode ^ ignoreNullable.hashCode;
 }
