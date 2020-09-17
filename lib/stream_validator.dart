@@ -3,10 +3,14 @@ library stream_validator;
 export 'contracts/validator.dart';
 export 'contracts/validation_connector.dart';
 export 'contracts/validation_controller.dart';
+export 'contracts/stream_validation_controller.dart';
+export 'contracts/error_provider.dart';
 export 'contracts/stream_error_provider.dart';
 
 export 'stream_validation_connector.dart';
+export 'value_listenable_validation_connector.dart';
 export 'subject_stream_validation_controller.dart';
+export 'value_notifier_validation_controller.dart';
 
 export 'validators/field_validator.dart';
 export 'validators/custom_validator.dart';
