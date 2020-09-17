@@ -1,8 +1,8 @@
 import 'not_equal_to_validator.dart';
 
 /// Checks if provided value not equal to `null`
-class NotNullValidator extends NotEqualToValidator<Object> {
-  const NotNullValidator({
+class IsNotNullValidator extends NotEqualToValidator<Object> {
+  const IsNotNullValidator({
     String fieldName,
     String message = 'can\'t be null',
   })  : super(
@@ -11,6 +11,6 @@ class NotNullValidator extends NotEqualToValidator<Object> {
     message: message,
   );
 
-  const NotNullValidator.withMessage(String message)
+  const IsNotNullValidator.withMessage(String message)
       : super.withMessage(null, message);
 }
