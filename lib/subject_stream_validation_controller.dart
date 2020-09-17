@@ -122,6 +122,7 @@ class SubjectStreamValidationController<K> implements ValidationController<K> {
   @override
   void removeConnector(ValidationConnector<K, Object> connector) {
     _connectors.remove(connector);
+    clearFieldError(connector.field);
   }
 
   @override
