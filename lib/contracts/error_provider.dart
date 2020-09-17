@@ -7,7 +7,4 @@ abstract class ErrorProvider<K> {
 
   /// If provider has an error message
   bool get hasValue;
-
-  /// Validation error stream
-  Stream<String> get stream;
 }

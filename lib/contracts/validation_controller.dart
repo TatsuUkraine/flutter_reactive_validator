@@ -1,5 +1,4 @@
-import 'package:stream_validator/contracts/error_provider.dart';
-
+import 'error_provider.dart';
 import 'validation_connector.dart';
 
 abstract class ValidationController<K> {
@@ -18,23 +17,14 @@ abstract class ValidationController<K> {
   /// [ErrorProvider.value] gives sync access to current validation error
   ErrorProvider<K> fieldErrorProvider(K field);
 
-  /// Provides [Stream] with validation errors for particular field
-  Stream<String> fieldErrorStream(K field);
-
   /// Sync access to the validation error message if there is one
   String fieldError(K field);
 
   /// Sync access to current validation error messages
   Map<K, String> get errors;
 
-  /// [Stream] with all validation error messages.
-  Stream<Map<K, String>> get errorsStream;
-
   /// Sync access to validation state
   bool get isValid;
-
-  /// [Stream] with current validation state
-  Stream<bool> get isValidStream;
 
   /// Remove error message from particular field
   void clearFieldError(K field);

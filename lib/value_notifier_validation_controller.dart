@@ -1,10 +1,9 @@
-import 'package:rxdart/rxdart.dart';
+import 'package:flutter/foundation.dart';
 
-import 'contracts/stream_error_provider.dart';
-import 'contracts/stream_validation_controller.dart';
-import 'mapped_stream_error_provider.dart';
+import 'value_error_provider.dart';
+import 'contracts/error_provider.dart';
 import 'contracts/validation_connector.dart';
-
+import 'contracts/validation_controller.dart';
 
 
 /// Validation controller that contains current state of validation.
@@ -12,43 +11,33 @@ import 'contracts/validation_connector.dart';
 /// Can be used to insert custom validation messages provided from API
 /// or can be managed by [ValidationConnector]'s on data stream changes.
 ///
-/// Works with [BehaviorSubject] stream controller.
+/// Works with [ValueNotifier] as a controller.
 ///
 /// Which means that all streams, that provided by this controller, will emit last value
 /// to the listeners as soon as they subscribe.
-class SubjectStreamValidationController<K> implements StreamValidationController<K> {
-  final BehaviorSubject<Map<K, String>> streamController;
+class ValueNotifierValidationController<K> implements ValidationController<K> {
+  final ValueNotifier<Map<K, String>> valueNotifier;
 
   List<ValidationConnector<K,Object>> _connectors = [];
 
-  SubjectStreamValidationController()
-      : streamController = BehaviorSubject<Map<K, String>>();
+  ValueNotifierValidationController()
+      : valueNotifier = ValueNotifier<Map<K, String>>({});
 
-  SubjectStreamValidationController.seeded(Map<K, String> errors)
-      : streamController = BehaviorSubject<Map<K, String>>.seeded(errors);
-
-  @override
-  StreamErrorProvider<K> fieldErrorProvider(K field) =>
-      MappedStreamErrorProvider<K>(field, streamController.stream);
+  ValueNotifierValidationController.seeded(Map<K, String> errors)
+      : valueNotifier = ValueNotifier<Map<K, String>>(errors);
 
   @override
-  Stream<String> fieldErrorStream(K field) => errorsStream
-      .map((errors) => errors[field]);
+  ErrorProvider<K> fieldErrorProvider(K field) =>
+      ValueErrorProvider<K>(field, errors[field]);
 
   @override
   String fieldError(K field) => errors[field];
 
   @override
-  Stream<Map<K, String>> get errorsStream => streamController.stream;
-
-  @override
-  Map<K, String> get errors => streamController.value ?? {};
+  Map<K, String> get errors => valueNotifier.value;
 
   @override
   bool get isValid => errors.isEmpty;
-  
-  @override
-  Stream<bool> get isValidStream => errorsStream.map((errors) => errors.isEmpty);
 
   @override
   void clearFieldError(K field) {
@@ -56,9 +45,7 @@ class SubjectStreamValidationController<K> implements StreamValidationController
       return;
     }
 
-    streamController.sink.add(
-      {...errors}..remove(field)
-    );
+    valueNotifier.value = {...errors}..remove(field);
   }
 
   @override
@@ -67,19 +54,19 @@ class SubjectStreamValidationController<K> implements StreamValidationController
       return;
     }
 
-    streamController.sink.add({});
+    valueNotifier.value = {};
   }
 
   @override
   void addFieldError(K field, String error) {
-    streamController.sink.add({
+    valueNotifier.value = {
       ...errors,
       field: error,
-    });
+    };
   }
 
   @override
-  void addErrors(Map<K, String> errors) => streamController.sink.add(errors);
+  void addErrors(Map<K, String> errors) => valueNotifier.value = errors;
 
   @override
   Future<void> validate() {
@@ -111,7 +98,7 @@ class SubjectStreamValidationController<K> implements StreamValidationController
     });
 
     _connectors.clear();
-    streamController.close();
+    valueNotifier.dispose();
   }
 
   @override

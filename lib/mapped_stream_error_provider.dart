@@ -1,14 +1,14 @@
 import 'package:rxdart/rxdart.dart';
 
-import 'contracts/error_provider.dart';
+import 'contracts/stream_error_provider.dart';
 
-class MappedValueErrorProvider<K> implements ErrorProvider<K> {
+class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   @override
   final K field;
 
   final ValueStream<Map<K, String>> _valueStream;
 
-  const MappedValueErrorProvider(this.field, this._valueStream);
+  const MappedStreamErrorProvider(this.field, this._valueStream);
 
   @override
   String get value => _transform(_valueStream.value);
@@ -30,7 +30,7 @@ class MappedValueErrorProvider<K> implements ErrorProvider<K> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MappedValueErrorProvider<K> &&
+      other is MappedStreamErrorProvider<K> &&
           runtimeType == other.runtimeType &&
           field == other.field &&
           _valueStream == other._valueStream;
