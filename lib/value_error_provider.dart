@@ -1,4 +1,4 @@
-import 'package:stream_validator/contracts/error_provider.dart';
+import 'contracts/error_provider.dart';
 
 class ValueErrorProvider<K> implements ErrorProvider<K> {
   @override

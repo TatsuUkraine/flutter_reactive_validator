@@ -2,8 +2,8 @@ import 'package:rxdart/rxdart.dart';
 
 import 'contracts/stream_error_provider.dart';
 import 'contracts/stream_validation_controller.dart';
-import 'mapped_stream_error_provider.dart';
 import 'contracts/validation_connector.dart';
+import 'mapped_stream_error_provider.dart';
 
 
 
