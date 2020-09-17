@@ -11,4 +11,15 @@ class ValueErrorProvider<K> implements ErrorProvider<K> {
 
   @override
   bool get hasValue => value != null;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ValueErrorProvider<K> &&
+          runtimeType == other.runtimeType &&
+          field == other.field &&
+          value == other.value;
+
+  @override
+  int get hashCode => field.hashCode ^ value.hashCode;
 }
