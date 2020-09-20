@@ -9,7 +9,7 @@ class MaxCharactersValidator extends FieldValidator<String> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    message: errorMessage ?? 'should contain maximum $max characters',
+    message: errorMessage ?? 'can contain maximum $max characters',
   );
 
   const MaxCharactersValidator.withMessage(
