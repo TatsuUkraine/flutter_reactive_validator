@@ -39,7 +39,7 @@ class SubjectStreamValidationController<K> implements StreamValidationController
   String fieldError(K field) => errors[field];
 
   @override
-  Stream<Map<K, String>> get errorsStream => streamController.stream;
+  ValueStream<Map<K, String>> get errorsStream => streamController.stream;
 
   @override
   Map<K, String> get errors => streamController.value ?? {};

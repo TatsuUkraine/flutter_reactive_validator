@@ -1,3 +1,5 @@
+import 'package:rxdart/rxdart.dart';
+
 import 'stream_error_provider.dart';
 import 'validation_controller.dart';
 
@@ -10,7 +12,7 @@ abstract class StreamValidationController<K> extends ValidationController<K> {
   StreamErrorProvider<K> fieldErrorProvider(K field);
 
   /// [Stream] with all validation error messages.
-  Stream<Map<K, String>> get errorsStream;
+  ValueStream<Map<K, String>> get errorsStream;
 
   /// [Stream] with current validation state
   Stream<bool> get isValidStream;
