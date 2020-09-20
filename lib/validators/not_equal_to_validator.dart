@@ -23,5 +23,5 @@ class NotEqualToValidator<I> extends FieldValidator<I> {
   );
 
   @override
-  bool isValid(I value) => value == equalTo;
+  bool isValid(I value) => value != equalTo;
 }

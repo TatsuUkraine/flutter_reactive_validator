@@ -1,7 +1,7 @@
 import 'equal_to_validator.dart';
 
 /// Checks if provided value is equal to `null`
-class IsNullValidator extends EqualToValidator<Object> {
+class IsNullValidator<I> extends EqualToValidator<I> {
   const IsNullValidator({
     String fieldName,
     String message,

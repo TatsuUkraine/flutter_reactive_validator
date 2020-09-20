@@ -1,7 +1,7 @@
-import 'not_equal_to_validator.dart';
+import 'equal_to_validator.dart';
 
 /// Checks if provided value is equal to `true`
-class IsTrueValidator extends NotEqualToValidator<bool> {
+class IsTrueValidator extends EqualToValidator<bool> {
   const IsTrueValidator({
     String fieldName,
     String message = 'should be equal to true',
