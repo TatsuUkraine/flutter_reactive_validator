@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'value_error_provider.dart';
 import 'contracts/error_provider.dart';
 import 'contracts/validation_connector.dart';
-import 'contracts/notifier_validation_controller.dart';
+import 'contracts/listenable_validation_controller.dart';
 
 
 /// Validation controller that contains current state of validation.
@@ -15,15 +15,15 @@ import 'contracts/notifier_validation_controller.dart';
 ///
 /// Which means that all streams, that provided by this controller, will emit last value
 /// to the listeners as soon as they subscribe.
-class ValueNotifierValidationController<K> implements NotifierValidationController<K> {
+class ValueListenableValidationController<K> implements ListenableValidationController<K> {
   final ValueNotifier<Map<K, String>> valueNotifier;
 
   List<ValidationConnector<K,Object>> _connectors = [];
 
-  ValueNotifierValidationController()
+  ValueListenableValidationController()
       : valueNotifier = ValueNotifier<Map<K, String>>({});
 
-  ValueNotifierValidationController.seeded(Map<K, String> errors)
+  ValueListenableValidationController.seeded(Map<K, String> errors)
       : valueNotifier = ValueNotifier<Map<K, String>>(errors);
 
   @override
@@ -37,7 +37,7 @@ class ValueNotifierValidationController<K> implements NotifierValidationControll
   Map<K, String> get errors => valueNotifier.value;
 
   @override
-  ValueNotifier<Map<K, String>> get errorsNotifier => valueNotifier;
+  ValueListenable<Map<K, String>> get errorsNotifier => valueNotifier;
 
   @override
   bool get isValid => errors.isEmpty;
