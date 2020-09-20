@@ -12,9 +12,6 @@ import 'contracts/listenable_validation_controller.dart';
 /// or can be managed by [ValidationConnector]'s on data stream changes.
 ///
 /// Works with [ValueNotifier] as a controller.
-///
-/// Which means that all streams, that provided by this controller, will emit last value
-/// to the listeners as soon as they subscribe.
 class ValueListenableValidationController<K> implements ListenableValidationController<K> {
   final ValueNotifier<Map<K, String>> valueNotifier;
 

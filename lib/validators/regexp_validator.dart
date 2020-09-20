@@ -9,7 +9,7 @@ class RegexpValidator extends FieldValidator<String> {
     String errorMessage,
   })  : super(
     fieldName: fieldName,
-    message: errorMessage ?? 'doesn\'t match to ${regExp.pattern}',
+    message: errorMessage ?? 'doesn\'t match to ${regExp.pattern} pattern',
   );
 
   const RegexpValidator.withMessage(
