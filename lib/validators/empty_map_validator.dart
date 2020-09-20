@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'field_validator.dart';
 
-/// Validates if [String] is empty
+/// Validates if [Map] is empty
 class EmptyMapValidator<K,V> extends FieldValidator<Map<K,V>> {
 
   const EmptyMapValidator({

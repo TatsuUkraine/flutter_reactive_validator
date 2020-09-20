@@ -15,7 +15,7 @@ export 'value_listenable_validation_controller.dart';
 
 export 'validators/field_validator.dart';
 export 'validators/custom_validator.dart';
-export 'validators/group_validator.dart';
+export 'validators/and_validator.dart';
 export 'validators/email_validator.dart';
 export 'validators/equal_to_validator.dart';
 export 'validators/not_equal_to_validator.dart';

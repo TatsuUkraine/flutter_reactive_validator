@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'field_validator.dart';
 
-/// Validates if [String] is not empty
+/// Validates if [Iterable] is not empty
 class NotEmptyIterableValidator<I> extends FieldValidator<Iterable<I>> {
 
   const NotEmptyIterableValidator({
