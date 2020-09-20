@@ -1,10 +1,10 @@
 import 'field_validator.dart';
 
 /// Check if field [String] value shorter than some length
-class MaxLengthValidator extends FieldValidator<String> {
+class MaxCharactersValidator extends FieldValidator<String> {
   final int max;
 
-  const MaxLengthValidator(this.max, {
+  const MaxCharactersValidator(this.max, {
     String fieldName,
     String errorMessage,
   })  : super(
@@ -12,7 +12,7 @@ class MaxLengthValidator extends FieldValidator<String> {
     message: errorMessage ?? 'should contain maximum $max characters',
   );
 
-  const MaxLengthValidator.withMessage(
+  const MaxCharactersValidator.withMessage(
     this.max,
     String message
   )   : super.withMessage(
