@@ -38,3 +38,4 @@ export 'validators/is_false_validator.dart';
 export 'validators/regexp_validator.dart';
 export 'validators/after_date_time_validator.dart';
 export 'validators/before_date_time_validator.dart';
+export 'validators/uri_validator.dart';
