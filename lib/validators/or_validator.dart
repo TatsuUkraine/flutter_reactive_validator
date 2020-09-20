@@ -5,7 +5,8 @@ import '../contracts/validator.dart';
 /// Stop execution as soon as first [Validator] validation succeeded.
 ///
 /// Unlike [AndValidator], this validator will be valid if at least
-/// one child validator is valid
+/// one child validator is valid. If all child validators are
+/// invalid - error message from the last validator will be provided
 ///
 /// All [Validator]'s should be designed to validate same value type.
 class OrValidator<I> implements Validator<I> {
