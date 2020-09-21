@@ -97,3 +97,21 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
     _controller.addFieldError(field, error);
   }
 }
+
+extension ValueListenableConnectorExtention<K,I> on ValueListenable<I> {
+  /// Connect validator to the [ValueListenable] object
+  ValidationConnector<K,I> connectValidator({
+    @required K field,
+    @required Validator<I> validator,
+    bool clearOnChange = true,
+    bool validateOnChange = false,
+    bool validateOnAttach = false,
+  }) => ValueListenableValidationConnector<K,I>(
+    field: field,
+    valueListenable: this,
+    validator: validator,
+    clearOnChange: clearOnChange,
+    validateOnChange: validateOnChange,
+    validateOnAttach: validateOnAttach,
+  );
+}

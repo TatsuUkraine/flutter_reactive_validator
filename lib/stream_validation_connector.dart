@@ -37,6 +37,18 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
   /// avoid validation override
   final bool clearOnChange;
 
+  /// If value should be validated on connector attach
+  ///
+  /// Validation will be invoke only if connector already
+  /// have last emitted value.
+  ///
+  /// If default [StreamValidationConnector] constructor is used,
+  /// validation will be invoked only after second attach.
+  ///
+  /// So if you need to validate [Stream] value on first attach, use
+  /// [StreamValidationConnector.seeded] constructor
+  final bool validateOnAttach;
+
   StreamSubscription<I> _subscription;
   ValidationController<K> _controller;
 
@@ -50,6 +62,7 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     @required this.validator,
     this.validateOnChange = false,
     this.clearOnChange = true,
+    this.validateOnAttach = false,
   })  : assert(!clearOnChange || !validateOnChange),
         _lastValue = null,
         _hasValue = false;
@@ -62,6 +75,7 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     I initialValue,
     this.validateOnChange,
     this.clearOnChange,
+    this.validateOnAttach = false,
   })  : assert(!clearOnChange || !validateOnChange),
         _lastValue = initialValue,
         _hasValue = true;
@@ -75,6 +89,10 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     _controller = controller;
     _controller.addConnector(this);
     _subscription = stream.listen(_onValueChanged);
+
+    if (validateOnAttach) {
+      _validateValue();
+    }
   }
 
   @override
@@ -107,6 +125,10 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
       return;
     }
 
+    _validateValue();
+  }
+
+  void _validateValue() {
     final String error = validate();
     if (error == null) {
       return _controller.clearFieldError(field);
@@ -114,4 +136,22 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
 
     _controller.addFieldError(field, error);
   }
+}
+
+extension StreamConnectorExtention<K,I> on Stream<I> {
+  /// Connect validator to the [Stream] object
+  ValidationConnector<K,I> connectValidator({
+    @required K field,
+    @required Validator<I> validator,
+    bool clearOnChange = true,
+    bool validateOnChange = false,
+    bool validateOnAttach = false,
+  }) => StreamValidationConnector<K,I>(
+    field: field,
+    stream: this,
+    validator: validator,
+    clearOnChange: clearOnChange,
+    validateOnChange: validateOnChange,
+    validateOnAttach: validateOnAttach,
+  );
 }
