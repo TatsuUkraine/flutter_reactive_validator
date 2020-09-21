@@ -90,7 +90,7 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
 
   @override
   void validateField() {
-    if (_controller != null) {
+    if (_controller == null) {
       throw UnsupportedError('Connector should be attached to the controller');
     }
 
