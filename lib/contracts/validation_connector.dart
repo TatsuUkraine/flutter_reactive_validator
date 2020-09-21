@@ -10,6 +10,10 @@ abstract class ValidationConnector<K,I> {
   /// Detach connector from the validation controller
   void detach();
 
-  /// Validate current field value
+  /// Validate current field value. Returns error message if
+  /// current value is invalid
   String validate();
+
+  /// Validates field, and pushes result to the [ValidationController]
+  void validateField();
 }

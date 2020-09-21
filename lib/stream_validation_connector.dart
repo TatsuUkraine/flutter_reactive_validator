@@ -91,7 +91,7 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     _subscription = stream.listen(_onValueChanged);
 
     if (validateOnAttach) {
-      _validateValue();
+      validateField();
     }
   }
 
@@ -125,10 +125,14 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
       return;
     }
 
-    _validateValue();
+    validateField();
   }
 
-  void _validateValue() {
+  void validateField() {
+    if (_controller != null) {
+      throw UnsupportedError('Connector should be attached to the controller');
+    }
+
     final String error = validate();
     if (error == null) {
       return _controller.clearFieldError(field);

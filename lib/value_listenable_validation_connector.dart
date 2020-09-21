@@ -61,7 +61,7 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
     valueListenable.addListener(_onValueChanged);
 
     if (validateOnAttach) {
-      _validateValue();
+      validateField();
     }
   }
 
@@ -85,10 +85,15 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
       return;
     }
 
-    _validateValue();
+    validateField();
   }
 
-  void _validateValue() {
+  @override
+  void validateField() {
+    if (_controller != null) {
+      throw UnsupportedError('Connector should be attached to the controller');
+    }
+
     final String error = validate();
     if (error == null) {
       return _controller.clearFieldError(field);
