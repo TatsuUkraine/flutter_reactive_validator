@@ -137,6 +137,10 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
       throw UnsupportedError('Connector should be attached to the controller');
     }
 
+    if (!_hasValue) {
+      return;
+    }
+
     final String error = validate();
     if (error == null) {
       return _controller.clearFieldError(field);

@@ -66,6 +66,26 @@ void main() {
     verify(controller.clearFieldError('field')).called(1);
   });
 
+  test('shouldn\'t validate if value is empty', () {
+    final controller = MockedController();
+    final stream = MockedStream();
+    final validator = MockedValidator();
+
+    final connector = StreamValidationConnector(
+      field: 'field',
+      validator: validator,
+      stream: stream,
+      validateOnAttach: true,
+    );
+
+    connector.attach(controller);
+
+    verify(controller.addConnector(connector)).called(1);
+    verify(stream.listen(argThat(anything))).called(1);
+    verifyNever(controller.clearFieldError(argThat(anything)));
+    verifyNever(validator.call(argThat(anything)));
+  });
+
   test('should throw error on detach', () {
     final connector = StreamValidationConnector(
       field: 'field',
@@ -112,7 +132,7 @@ void main() {
 
     connector.attach(controller);
 
-    stream.sink.add('falue');
+    stream.sink.add('value');
 
     verify(controller.clearFieldError('field')).called(1);
 
