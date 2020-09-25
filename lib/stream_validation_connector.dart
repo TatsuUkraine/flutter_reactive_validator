@@ -72,9 +72,9 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     @required this.field,
     @required this.stream,
     @required this.validator,
-    I initialValue,
-    this.validateOnChange,
-    this.clearOnChange,
+    @required I initialValue,
+    this.validateOnChange = false,
+    this.clearOnChange = true,
     this.validateOnAttach = false,
   })  : assert(!clearOnChange || !validateOnChange),
         _lastValue = initialValue,
@@ -97,6 +97,10 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
 
   @override
   void detach() {
+    if (_controller == null) {
+      throw UnsupportedError('Validator not attached');
+    }
+
     _subscription?.cancel();
     _controller?.removeConnector(this);
 
