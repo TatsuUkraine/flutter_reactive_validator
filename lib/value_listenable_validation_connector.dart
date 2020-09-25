@@ -67,6 +67,10 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
 
   @override
   void detach() {
+    if (_controller == null) {
+      throw UnsupportedError('Validator not attached');
+    }
+
     valueListenable.removeListener(_onValueChanged);
     _controller?.removeConnector(this);
 
