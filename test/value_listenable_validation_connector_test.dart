@@ -134,4 +134,12 @@ void main() {
     verify(controller.clearFieldError('field')).called(1);
     verify(controller.addFieldError('field', 'Error validation')).called(1);
   });
+
+  test('should connect validator to the notifier', () {
+    final notifier = ValueNotifier('');
+    final connector = notifier.connectValidator(field: 'field', validator: MockedValidator());
+
+    expect(connector, isInstanceOf<ValidationConnector>());
+    expect(connector.field, 'field');
+  });
 }
