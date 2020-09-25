@@ -27,9 +27,7 @@ class UriValidator extends FieldValidator<String> {
     this.scheme,
     this.host,
     this.port,
-  })  : super.withMessage(
-        message: message,
-      );
+  })  : super.withMessage(message: message);
 
   @override
   bool isValid(String value) {
