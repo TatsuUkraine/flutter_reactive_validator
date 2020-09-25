@@ -1,23 +1,25 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stream_validator/contracts/validation_connector.dart';
 import 'package:stream_validator/contracts/validation_controller.dart';
 import 'package:stream_validator/contracts/validator.dart';
-import 'package:stream_validator/value_listenable_validation_connector.dart';
+import 'package:stream_validator/stream_validation_connector.dart';
 
 class MockedValidator extends Mock implements Validator<String> {}
 class MockedController extends Mock implements ValidationController<String> {}
-class MockedListenable extends Mock implements ValueListenable<String> {}
+class MockedStream extends Mock implements Stream<String> {}
+class MockedSubscription extends Mock implements StreamSubscription<String> {}
 
 void main() {
   test('should throw error on attach', () {
     final controller = MockedController();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: MockedValidator(),
-      valueListenable: MockedListenable(),
+      stream: MockedStream(),
     );
 
     connector.attach(controller);
@@ -27,49 +29,48 @@ void main() {
 
   test('should attach controller', () {
     final controller = MockedController();
-    final listenable = MockedListenable();
     final validator = MockedValidator();
+    final stream = MockedStream();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: validator,
-      valueListenable: listenable,
+      stream: stream,
     );
 
     connector.attach(controller);
 
     verify(controller.addConnector(connector)).called(1);
-    verify(listenable.addListener(argThat(anything))).called(1);
+    verify(stream.listen(argThat(anything))).called(1);
     verifyNever(validator.call(argThat(anything)));
   });
 
   test('should attach controller and validate', () {
     final controller = MockedController();
-    final listenable = MockedListenable();
+    final stream = MockedStream();
     final validator = MockedValidator();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector.seeded(
       field: 'field',
       validator: validator,
-      valueListenable: listenable,
+      stream: stream,
       validateOnAttach: true,
+      initialValue: 'value',
     );
-
-    when(listenable.value).thenReturn('value');
 
     connector.attach(controller);
 
     verify(controller.addConnector(connector)).called(1);
-    verify(listenable.addListener(argThat(anything))).called(1);
+    verify(stream.listen(argThat(anything))).called(1);
     verify(validator.call('value')).called(1);
     verify(controller.clearFieldError('field')).called(1);
   });
 
   test('should throw error on detach', () {
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: MockedValidator(),
-      valueListenable: MockedListenable(),
+      stream: MockedStream(),
     );
 
     expect(() => connector.detach(), throwsUnsupportedError);
@@ -77,50 +78,56 @@ void main() {
 
   test('should detach', () {
     final controller = MockedController();
-    final listenable = MockedListenable();
+    final stream = MockedStream();
+    final subscription = MockedSubscription();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: MockedValidator(),
-      valueListenable: listenable,
+      stream: stream,
     );
+
+
+    when(stream.listen(argThat(anything))).thenReturn(subscription);
 
     connector.attach(controller);
     connector.detach();
 
-    verify(listenable.removeListener(argThat(anything))).called(1);
+    verify(subscription.cancel()).called(1);
     verify(controller.removeConnector(connector)).called(1);
   });
 
   test('should clear on change', () {
     final controller = MockedController();
-    final listenable = ValueNotifier('');
+    final stream = StreamController(sync: true);
     final validator = MockedValidator();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: validator,
-      valueListenable: listenable,
+      stream: stream.stream,
       clearOnChange: true,
       validateOnChange: false,
     );
 
     connector.attach(controller);
 
-    listenable.value = 'value';
+    stream.sink.add('falue');
 
     verify(controller.clearFieldError('field')).called(1);
+
+    stream.close();
   });
 
   test('should validate on change', () {
     final controller = MockedController();
-    final listenable = ValueNotifier('');
+    final stream = StreamController(sync: true);
     final validator = MockedValidator();
 
-    final connector = ValueListenableValidationConnector(
+    final connector = StreamValidationConnector(
       field: 'field',
       validator: validator,
-      valueListenable: listenable,
+      stream: stream.stream,
       clearOnChange: false,
       validateOnChange: true,
     );
@@ -130,18 +137,22 @@ void main() {
     when(validator.call('value')).thenReturn(null);
     when(validator.call('value2')).thenReturn('Error validation');
 
-    listenable.value = 'value';
-    listenable.value = 'value2';
+    stream.sink.add('value');
+    stream.sink.add('value2');
 
     verify(controller.clearFieldError('field')).called(1);
     verify(controller.addFieldError('field', 'Error validation')).called(1);
+
+    stream.close();
   });
 
   test('should connect validator to the notifier', () {
-    final notifier = ValueNotifier('');
-    final connector = notifier.connectValidator(field: 'field', validator: MockedValidator());
+    final controller = StreamController();
+    final connector = controller.stream.connectValidator(field: 'field', validator: MockedValidator());
 
     expect(connector, isInstanceOf<ValidationConnector>());
     expect(connector.field, 'field');
+
+    controller.close();
   });
 }
