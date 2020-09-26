@@ -6,5 +6,5 @@ abstract class ErrorProvider<K> {
   String get value;
 
   /// If provider has an error message
-  bool get hasValue;
+  bool get hasError;
 }
