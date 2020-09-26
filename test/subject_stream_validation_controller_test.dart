@@ -35,7 +35,7 @@ void main() {
     });
     final provider = controller.fieldErrorProvider('field');
 
-    expect(provider, isInstanceOf<StreamErrorProvider>());
+    expect(provider, isInstanceOf<StreamErrorProvider<String>>());
     expect(provider.field, 'field');
     expect(provider.value, 'value');
     expect(provider.hasError, isTrue);
@@ -140,6 +140,16 @@ void main() {
       'field': 'error',
     });
     expect(controller.isValid, isFalse);
+
+    controller.dispose();
+  });
+
+  test('should provide streams', () {
+    final controller = SubjectStreamValidationController<String>();
+
+    expect(controller.isValidStream, isInstanceOf<Stream<bool>>());
+    expect(controller.errorsStream, isInstanceOf<Stream<Map<String, String>>>());
+    expect(controller.fieldErrorStream('field'), isInstanceOf<Stream<String>>());
 
     controller.dispose();
   });

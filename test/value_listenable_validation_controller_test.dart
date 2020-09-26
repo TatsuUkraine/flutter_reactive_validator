@@ -35,7 +35,7 @@ void main() {
     });
     final provider = controller.fieldErrorProvider('field');
 
-    expect(provider, isInstanceOf<ErrorProvider>());
+    expect(provider, isInstanceOf<ErrorProvider<String>>());
     expect(provider.field, 'field');
     expect(provider.value, 'value');
     expect(provider.hasError, isTrue);
