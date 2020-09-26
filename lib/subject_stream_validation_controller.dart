@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
+import 'base_validation_controller.dart';
 import 'contracts/stream_error_provider.dart';
 import 'contracts/stream_validation_controller.dart';
 import 'contracts/validation_connector.dart';
@@ -16,128 +17,41 @@ import 'mapped_stream_error_provider.dart';
 ///
 /// Which means that all streams, that provided by this controller, will emit last value
 /// to the listeners as soon as they subscribe.
-class SubjectStreamValidationController<K> implements StreamValidationController<K> {
-  final BehaviorSubject<Map<K, String>> streamController;
+class SubjectStreamValidationController<K>
+    extends BaseValidationController<K>
+    implements StreamValidationController<K> {
 
-  List<ValidationConnector<K,Object>> _connectors = [];
+  final BehaviorSubject<Map<K, String>> _streamController;
 
-  SubjectStreamValidationController()
-      : streamController = BehaviorSubject<Map<K, String>>();
+  SubjectStreamValidationController({bool sync: false})
+      : _streamController = BehaviorSubject<Map<K, String>>(sync: sync);
 
-  SubjectStreamValidationController.seeded(Map<K, String> errors)
-      : streamController = BehaviorSubject<Map<K, String>>.seeded(errors);
+  SubjectStreamValidationController.seeded(Map<K, String> errors, {bool sync: false})
+      : _streamController = BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync);
 
   @override
   StreamErrorProvider<K> fieldErrorProvider(K field) =>
-      MappedStreamErrorProvider<K>(field, streamController.stream);
+      MappedStreamErrorProvider<K>(field, _streamController.stream);
 
   @override
   Stream<String> fieldErrorStream(K field) => errorsStream
       .map((errors) => errors[field]);
 
   @override
-  String fieldError(K field) => errors[field];
+  Stream<Map<K, String>> get errorsStream => _streamController.stream;
 
   @override
-  Stream<Map<K, String>> get errorsStream => streamController.stream;
-
-  @override
-  Map<K, String> get errors => streamController.value ?? {};
-
-  @override
-  bool get isValid => errors.isEmpty;
+  Map<K, String> get errors => _streamController.value ?? {};
   
   @override
   Stream<bool> get isValidStream => errorsStream.map((errors) => errors.isEmpty);
 
   @override
-  void clearFieldError(K field) {
-    if (!errors.containsKey(field)) {
-      return;
-    }
-
-    streamController.sink.add(
-      {...errors}..remove(field)
-    );
-  }
-
-  @override
-  void clearErrors() {
-    if (isValid) {
-      return;
-    }
-
-    streamController.sink.add({});
-  }
-
-  @override
-  void addFieldError(K field, String error) {
-    streamController.sink.add({
-      ...errors,
-      field: error,
-    });
-  }
-
-  @override
-  void addErrors(Map<K, String> errors) => streamController.sink.add(errors);
-
-  @override
-  Future<void> validate() {
-    return Future.wait(
-      _connectors.map<Future<_ValidationResult<K>>>((connector) {
-        return Future.microtask(() => _ValidationResult<K>(
-          connector.field,
-          connector.validate()
-        ));
-      }).toList()
-    ).then((collection) {
-      return collection.fold<Map<K, String>>({}, (value, result) {
-        if (!result.hasError) {
-          return value;
-        }
-
-        return {
-          ...value,
-          result.field: result.error,
-        };
-      });
-    }).then(addErrors);
-  }
+  void addErrors(Map<K, String> errors) => _streamController.sink.add(errors);
 
   @override
   void dispose() {
-    [..._connectors].forEach((validator) {
-      validator.detach();
-    });
-
-    _connectors.clear();
-    streamController.close();
+    _streamController.close();
+    super.dispose();
   }
-
-  @override
-  void addConnector(ValidationConnector<K, Object> connector) {
-    _connectors.add(connector);
-  }
-
-  @override
-  void removeConnector(ValidationConnector<K, Object> connector) {
-    _connectors.remove(connector);
-    clearFieldError(connector.field);
-  }
-
-  @override
-  void attachConnectors(Iterable<ValidationConnector<K,Object>> connectors) {
-    connectors.forEach((connector) {
-      connector.attach(this);
-    });
-  }
-}
-
-class _ValidationResult<K> {
-  final K field;
-  final String error;
-
-  _ValidationResult(this.field, this.error);
-
-  bool get hasError => error != null;
 }

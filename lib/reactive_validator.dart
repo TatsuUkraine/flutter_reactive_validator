@@ -12,6 +12,8 @@ export 'stream_validation_connector.dart';
 export 'value_listenable_validation_connector.dart';
 export 'subject_stream_validation_controller.dart';
 export 'value_listenable_validation_controller.dart';
+export 'value_error_provider.dart';
+export 'mapped_stream_error_provider.dart';
 
 export 'validators/field_validator.dart';
 export 'validators/custom_validator.dart';
