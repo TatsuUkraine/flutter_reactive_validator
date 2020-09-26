@@ -7,7 +7,7 @@ class EmptyStringValidator extends FieldValidator<String> {
 
   const EmptyStringValidator({
     String fieldName,
-    @required String message
+    String message
   })  : super(
     fieldName: fieldName,
     message: message ?? 'should be empty',

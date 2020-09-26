@@ -7,7 +7,7 @@ class EmptyMapValidator<K,V> extends FieldValidator<Map<K,V>> {
 
   const EmptyMapValidator({
     String fieldName,
-    @required String message
+    String message
   })  : super(
     fieldName: fieldName,
     message: message ?? 'should be empty',

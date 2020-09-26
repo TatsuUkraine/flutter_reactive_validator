@@ -7,7 +7,7 @@ class EmptyIterableValidator<I> extends FieldValidator<Iterable<I>> {
 
   const EmptyIterableValidator({
     String fieldName,
-    @required String message
+    String message
   })  : super(
     fieldName: fieldName,
     message: message ?? 'should be empty',
