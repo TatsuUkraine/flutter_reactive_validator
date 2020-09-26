@@ -11,4 +11,13 @@ void main() {
 
     expect(providerWithoutValue.hasValue, false);
   });
+
+  test('should compare provider', () {
+    final provider1 = ValueErrorProvider<String>('field', 'value');
+    final provider2 = ValueErrorProvider<String>('field', 'value');
+    final provider3 = ValueErrorProvider<String>('field', 'value2');
+
+    expect(provider1 == provider2, isTrue);
+    expect(provider1 == provider3, isFalse);
+  });
 }
