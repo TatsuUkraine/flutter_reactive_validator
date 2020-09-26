@@ -14,7 +14,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   String get value => _transform(_valueStream.value);
 
   @override
-  bool get hasValue => _valueStream.value != null;
+  bool get hasError => _valueStream.value != null;
 
   @override
   Stream<String> get stream {

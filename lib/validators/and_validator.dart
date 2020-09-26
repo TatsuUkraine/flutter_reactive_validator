@@ -5,10 +5,13 @@ import '../contracts/validator.dart';
 /// Stop execution as soon as first [Validator] validation fails.
 ///
 /// All [Validator]'s should be designed to validate same value type.
-class GroupValidator<I> implements Validator<I> {
+///
+/// Unlike [OrValidator] this validator will be valid only
+/// if ALL child validators are valid
+class AndValidator<I> implements Validator<I> {
   final Iterable<Validator<I>> validators;
 
-  const GroupValidator(this.validators)
+  const AndValidator(this.validators)
       : assert(validators != null);
 
   @override

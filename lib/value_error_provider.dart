@@ -10,7 +10,7 @@ class ValueErrorProvider<K> implements ErrorProvider<K> {
   const ValueErrorProvider(this.field, this.value);
 
   @override
-  bool get hasValue => value != null;
+  bool get hasError => value != null;
 
   @override
   bool operator ==(Object other) =>
