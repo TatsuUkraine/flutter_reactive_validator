@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import 'base_validation_connector.dart';
 import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
 import 'contracts/validator.dart';
@@ -14,10 +15,9 @@ import 'contracts/validator.dart';
 /// Requires to be attached to the controller.
 ///
 /// As soon as it attaches to controller, it starts listen provided stream.
-class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
-
-  @override
-  final K field;
+class StreamValidationConnector<K, I>
+    extends BaseValidationConnector<K,I>
+    implements ValidationConnector<K, I> {
 
   /// [Stream] with value that should be validated
   final Stream<I> stream;
@@ -50,14 +50,13 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
   final bool validateOnAttach;
 
   StreamSubscription<I> _subscription;
-  ValidationController<K> _controller;
 
   I _lastValue;
   bool _hasValue = false;
 
   /// Creates default connector
   StreamValidationConnector({
-    @required this.field,
+    @required K field,
     @required this.stream,
     @required this.validator,
     this.validateOnChange = false,
@@ -65,11 +64,12 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     this.validateOnAttach = false,
   })  : assert(!clearOnChange || !validateOnChange),
         _lastValue = null,
-        _hasValue = false;
+        _hasValue = false,
+        super(field);
 
   /// Creates connector with seeded data
   StreamValidationConnector.seeded({
-    @required this.field,
+    @required K field,
     @required this.stream,
     @required this.validator,
     @required I initialValue,
@@ -78,16 +78,13 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     this.validateOnAttach = false,
   })  : assert(!clearOnChange || !validateOnChange),
         _lastValue = initialValue,
-        _hasValue = true;
+        _hasValue = true,
+        super(field);
 
   @override
   void attach(ValidationController<K> controller) {
-    if (_controller != null) {
-      throw UnsupportedError('Validator can be attached to only single controller');
-    }
+    super.attach(controller);
 
-    _controller = controller;
-    _controller.addConnector(this);
     _subscription = stream.listen(_onValueChanged);
 
     if (validateOnAttach) {
@@ -97,15 +94,10 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
 
   @override
   void detach() {
-    if (_controller == null) {
-      throw UnsupportedError('Validator not attached');
-    }
+    super.detach();
 
     _subscription?.cancel();
-    _controller?.removeConnector(this);
-
     _subscription = null;
-    _controller = null;
   }
 
   @override
@@ -117,12 +109,21 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     return validator(_lastValue);
   }
 
+  @override
+  void validateField() {
+    if (!_hasValue) {
+      return;
+    }
+
+    super.validateField();
+  }
+
   void _onValueChanged(I value) {
     _hasValue = true;
     _lastValue = value;
 
     if (clearOnChange) {
-      _controller.clearFieldError(field);
+      controller.clearFieldError(field);
     }
 
     if (!validateOnChange) {
@@ -130,23 +131,6 @@ class StreamValidationConnector<K, I> implements ValidationConnector<K, I> {
     }
 
     validateField();
-  }
-
-  void validateField() {
-    if (_controller == null) {
-      throw UnsupportedError('Connector should be attached to the controller');
-    }
-
-    if (!_hasValue) {
-      return;
-    }
-
-    final String error = validate();
-    if (error == null) {
-      return _controller.clearFieldError(field);
-    }
-
-    _controller.addFieldError(field, error);
   }
 }
 

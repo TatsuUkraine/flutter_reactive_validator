@@ -4,6 +4,9 @@ abstract class ValidationConnector<K,I> {
   /// Field key for error message
   K get field;
 
+  /// Attached [ValidationController] controller
+  ValidationController<K> get controller;
+
   /// Attach connector to the validation controller
   void attach(ValidationController<K> controller);
 

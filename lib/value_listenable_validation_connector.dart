@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import 'base_validation_connector.dart';
 import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
 import 'contracts/validator.dart';
@@ -12,10 +13,9 @@ import 'contracts/validator.dart';
 /// Requires to be attached to the controller.
 ///
 /// As soon as it attaches to controller, it starts listen provided [ValueListenable].
-class ValueListenableValidationConnector<K, I> implements ValidationConnector<K, I> {
-
-  @override
-  final K field;
+class ValueListenableValidationConnector<K, I>
+    extends BaseValidationConnector<K,I>
+    implements ValidationConnector<K, I> {
 
   /// [ValueListenable] with value that should be validated
   final ValueListenable<I> valueListenable;
@@ -38,26 +38,21 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
   /// If value should be validated on connector attached to the controller
   final bool validateOnAttach;
 
-  ValidationController<K> _controller;
-
   /// Creates default connector
   ValueListenableValidationConnector({
-    @required this.field,
+    @required K field,
     @required this.valueListenable,
     @required this.validator,
     this.validateOnChange = false,
     this.clearOnChange = true,
     this.validateOnAttach = false,
-  })  : assert(!clearOnChange || !validateOnChange);
+  })  : assert(!clearOnChange || !validateOnChange),
+        super(field);
 
   @override
   void attach(ValidationController<K> controller) {
-    if (_controller != null) {
-      throw UnsupportedError('Validator can be attached to only single controller');
-    }
+    super.attach(controller);
 
-    _controller = controller;
-    _controller.addConnector(this);
     valueListenable.addListener(_onValueChanged);
 
     if (validateOnAttach) {
@@ -67,14 +62,9 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
 
   @override
   void detach() {
-    if (_controller == null) {
-      throw UnsupportedError('Validator not attached');
-    }
+    super.detach();
 
     valueListenable.removeListener(_onValueChanged);
-    _controller?.removeConnector(this);
-
-    _controller = null;
   }
 
   @override
@@ -82,7 +72,7 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
 
   void _onValueChanged() {
     if (clearOnChange) {
-      _controller.clearFieldError(field);
+      controller.clearFieldError(field);
     }
 
     if (!validateOnChange) {
@@ -90,20 +80,6 @@ class ValueListenableValidationConnector<K, I> implements ValidationConnector<K,
     }
 
     validateField();
-  }
-
-  @override
-  void validateField() {
-    if (_controller == null) {
-      throw UnsupportedError('Connector should be attached to the controller');
-    }
-
-    final String error = validate();
-    if (error == null) {
-      return _controller.clearFieldError(field);
-    }
-
-    _controller.addFieldError(field, error);
   }
 }
 
