@@ -116,6 +116,7 @@ void main() {
     when(connector.field).thenReturn('field');
 
     controller.addFieldError('field', 'error');
+    expect(controller.isValid, isFalse);
     controller.removeConnector(connector);
 
     expect(controller.isValid, isTrue);
