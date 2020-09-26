@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:stream_validator/contracts/validation_connector.dart';
-import 'package:stream_validator/contracts/validation_controller.dart';
-import 'package:stream_validator/contracts/validator.dart';
-import 'package:stream_validator/stream_validation_connector.dart';
+import 'package:reactive_validator/contracts/validation_connector.dart';
+import 'package:reactive_validator/contracts/validation_controller.dart';
+import 'package:reactive_validator/contracts/validator.dart';
+import 'package:reactive_validator/stream_validation_connector.dart';
 
 class MockedValidator extends Mock implements Validator<String> {}
 class MockedController extends Mock implements ValidationController<String> {}

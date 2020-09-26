@@ -1,4 +1,4 @@
-library stream_validator;
+library reactive_validator;
 
 export 'contracts/validator.dart';
 export 'contracts/validation_connector.dart';

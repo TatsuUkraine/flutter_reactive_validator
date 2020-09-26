@@ -1,4 +1,4 @@
-# flutter_stream_validator
+# reactive_validator
 
 A new Flutter package.
 

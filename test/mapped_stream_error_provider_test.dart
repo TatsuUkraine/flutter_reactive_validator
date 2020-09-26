@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stream_validator/mapped_stream_error_provider.dart';
+import 'package:reactive_validator/mapped_stream_error_provider.dart';
 
 class MockedStream extends Mock implements ValueStream<Map<String, String>> {}
 

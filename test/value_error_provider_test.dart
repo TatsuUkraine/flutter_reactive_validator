@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stream_validator/value_error_provider.dart';
+import 'package:reactive_validator/value_error_provider.dart';
 
 void main() {
   test('should define if error provided', () {
