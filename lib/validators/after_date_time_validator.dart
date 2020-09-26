@@ -21,6 +21,6 @@ class AfterDateTimeValidator extends FieldValidator<DateTime> {
       super.withMessage(message: message);
 
   @override
-  bool isValid(DateTime value) => dateTime.isAfter(value);
+  bool isValid(DateTime value) => value.isAfter(dateTime);
 
 }
