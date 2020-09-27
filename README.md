@@ -14,6 +14,22 @@ In addition to error management this package also provides sett of
 validators for some common validation cases. If need - any callable
 validator instance can be used to validate target value
 
+## Table Of Contents
+
+- [Getting Started](#getting-started)
+- [Validation controller](#validation-controller)
+  - [Invoke validation](#invoke-validation)
+  - [StreamValidationController](#streamvalidationcontroller)
+- [Validation connectors](#validation-connectors)
+  - [ValueListenableValidationConnector](#valuelistenablevalidationconnector)
+  - [StreamValidationConnector](#streamvalidationconnector)
+    - [Stream validation specific](#stream-validation-specific)
+  - [Create validation connector](#create-validation-connector)
+- [Validators](#validators)
+  - [Validation against multiple validators](#validation-against-multiple-validators)
+  - [Custom validation](#custom-validation)
+  - [External validator package usage](#external-validator-package-usage)
+
 ## Getting Started
 
 Install and import package
@@ -254,7 +270,7 @@ last one in the `OrValidator` group.
 ### Custom validation
 
 If you need any custom validation or you want to use some external
-package validators, you have 2 options.
+package validators, you have 3 options:
 
 1. Implement `Validator` interface
 
