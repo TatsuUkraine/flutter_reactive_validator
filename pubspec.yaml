@@ -1,8 +1,11 @@
 name: reactive_validator
-description: A new Flutter package.
-version: 0.0.4
-author:
-homepage:
+description: >-
+  Type safe validation controller.
+  Allows to manage validation state manually or responding to reactive value changes
+version: 1.0.0-dev.1
+homepage: https://github.com/TatsuUkraine/flutter_reactive_validator
+repository: https://github.com/TatsuUkraine/flutter_reactive_validator
+issue_tracker: https://github.com/TatsuUkraine/flutter_reactive_validator/issues
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
