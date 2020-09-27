@@ -162,7 +162,7 @@ OrValidator([
 ```
 
 Keep in mind that this validator will validate value against all child
-validators, until it any child validator says that value is valid. Which
+validators, until any child validator says that value is valid. Which
 means that validation error message (if the's any) will be returned from
 the last not valid validator. So ensure that your primary validator is a
 last one in the `OrValidator` group.
