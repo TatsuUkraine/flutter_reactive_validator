@@ -70,4 +70,58 @@ controller.addFieldError('field', 'error');
 
 ## Validation connectors
 
+Package provides 2 types of validation connectors to provide relation
+between value that needs to be validated and validation rules.
 
+Each of them starts track value changes as soon as it attached to the
+controller.
+
+### ValueListenableValidationConnector
+
+This validation connector is needed to attach validation rules to
+ValueListenable object.
+
+```dart
+  ValueListenableValidationConnector<K,V>({
+    K field, /// required, field name
+    ValueListenable<V> valueListenable, /// required, value provider
+    Validator<V> validator, /// required, validation rules that needs to be applied
+    bool validateOnChange = false, /// if value should be validated as soon as it changes
+    bool clearOnChange = true, /// if validation error should be cleared as soon as value changes
+    bool validateOnAttach = false, /// if value should be validated as soon as connector attached to the controller
+  });
+```
+
+To prevent collision, connector can't invoke validation on change and
+clear validation error on change. Which means that `validateOnChange`
+and `clearOnChange` can't be both `true` in the same time
+
+### StreamValidationConnector
+
+This validation connector is needed to attach validation rules to Stream
+object.
+
+```dart
+  StreamValidationConnector<K,V>({
+    K field, /// required, field name
+    Stream<V> stream, /// required, value provider
+    Validator<V> validator, /// required, validation rules that needs to be applied
+    bool validateOnChange = false, /// if value should be validated as soon as it changes
+    bool clearOnChange = true, /// if validation error should be cleared as soon as value changes
+    bool validateOnAttach = false, /// if value should be validated as soon as connector attached to the controller
+  });
+
+  StreamValidationConnector<K,V>.seeded({
+    V initialValue, /// required, initial value
+    K field, /// required, field name
+    Stream<V> stream, /// required, value provider
+    Validator<V> validator, /// required, validation rules that needs to be applied
+    bool validateOnChange = false, /// if value should be validated as soon as it changes
+    bool clearOnChange = true, /// if validation error should be cleared as soon as value changes
+    bool validateOnAttach = false, /// if value should be validated as soon as connector attached to the controller
+  });
+```
+
+To prevent collision, connector can't invoke validation on change and
+clear validation error on change. Which means that `validateOnChange`
+and `clearOnChange` can't be both `true` in the same time.
