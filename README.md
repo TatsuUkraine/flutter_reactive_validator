@@ -236,8 +236,7 @@ All build in validators has 2 type of constructors.
 - constructor with fully custom error message
 
 Some default validators can be found
-[here](https://pub.dev/documentation/reactive_validator/latest/validators/validators-library.html)
-.
+[here](https://pub.dev/documentation/reactive_validator/latest/) .
 
 ### Validation against multiple validators
 
