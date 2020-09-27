@@ -1,5 +1,7 @@
 # Reactive Validator
 
+[![pub package](https://img.shields.io/pub/v/reactive_validator.svg)](https://pub.dartlang.org/packages/reactive_validator)
+
 Reactive Validator is a type safe validation manager package for Streams
 and Value Notifiers.
 
@@ -208,7 +210,9 @@ All build in validators has 2 type of constructors.
 - constructor with predefined error message with ability to override it
 - constructor with fully custom error message
 
-Some default validators can be found here.
+Some default validators can be found
+[here](https://pub.dev/documentation/reactive_validator/latest/validators/validators-library.html)
+.
 
 ### Validation against multiple validators
 
