@@ -89,6 +89,12 @@ receive validation error, which you want to show to the user.
 **Important** Don't forget to `dispose` your controller when you no need
 it anymore.
 
+### Invoke validation
+
+To invoke validation against all attached connectors, just call
+`validate` method. It returns `Future` as soon as validation is
+finished.
+
 ### StreamValidationController
 
 `StreamValidationController`, which is implemented by
@@ -106,11 +112,14 @@ it.
 
 ## Validation connectors
 
-Package provides 2 types of validation connectors to provide relation
+Package provides 2 types of validation connectors. Both define relation
 between value that needs to be validated and validation rules.
 
-Each of them starts track value changes as soon as it attached to the
+Each of them starts to track value changes as soon as it attached to the
 controller.
+
+Package allows to use both connector types within the same controller
+instance as long as they using the same field type.
 
 ### ValueListenableValidationConnector
 
@@ -134,8 +143,8 @@ and `clearOnChange` can't be `true` in the same time
 
 ### StreamValidationConnector
 
-This validation connector is needed to attach validation rules to Stream
-object.
+This validation connector is needed to attach validation rules to a
+Stream object.
 
 ```dart
   StreamValidationConnector<K,V>({
@@ -284,3 +293,18 @@ If needed, this package can use any external validator packages. For
 instance you can take a look at `EmailValidator`, which uses
 [email_validator](https://pub.dev/packages/email_validator) package to
 validate if value is a valid email value.
+
+## Changelog
+
+Please see the
+[Changelog](https://github.com/TatsuUkraine/flutter_reactive_validator/blob/master/CHANGELOG.md)
+page to know what's recently changed.
+
+## Bugs/Requests
+
+If you encounter any problems feel free to open an
+[issue](https://github.com/TatsuUkraine/flutter_reactive_validator/issues).
+If you feel the library is missing a feature, please raise a ticket on
+Github and I'll look into it.
+
+Pull request are also welcome.
