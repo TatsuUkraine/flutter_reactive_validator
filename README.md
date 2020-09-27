@@ -53,7 +53,14 @@ ValueListenableValidationConnector<String, String>(
   field: 'some_third_field', /// field name that will be used within the error bucket
   valueListenable: someValueListenable, /// your [ValueListenable] with field value
   validator: const NotEmptyStringValidator(),
-)..attach(controller);
+).attach(controller);
+
+/// or with extension method
+someValueListenable.connectValidator(
+  field: 'some_fifth_field', /// field name that will be used within the error bucket
+  valueListenable: someValueListenable, /// your [ValueListenable] with field value
+  validator: const NotEmptyStringValidator(),
+).attach(controller);
 ```
 
 When you're ready to validate, just validate it
@@ -170,6 +177,25 @@ Stream object.
 To prevent collision, connector can't invoke validation on change and
 clear validation error on change. Which means that both `validateOnChange`
 and `clearOnChange` can't be `true` in the same time.
+
+### Create validation connector
+
+Validation connector can be created in 2 ways. First one with just
+constructor
+
+```dart
+final valueConnector = ValueListenableValidationConnector(...);
+/// Or
+final streamConnector = StreamValidationConnector(...);
+```
+
+And second one with extensions, that package provides
+
+```dart
+final valueConnector = valueListenable.connectValidator(...);
+/// Or
+final streamConnector = streamListenable.connectValidator(...);
+```
 
 ## Validators
 
