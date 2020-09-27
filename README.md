@@ -28,6 +28,7 @@ validator instance can be used to validate target value
 - [Validators](#validators)
   - [Validation against multiple validators](#validation-against-multiple-validators)
   - [Custom validation](#custom-validation)
+  - [Cross field validation](#cross-field-validation)
   - [External validator package usage](#external-validator-package-usage)
 
 ## Getting Started
@@ -340,6 +341,36 @@ callback.
 Second one - will use error message from the builder as it is. So ensure
 that error message is returned, otherwise `ValidationConnector` will
 think that validation is valid
+
+### Cross field validation
+
+Most simple way to provide cross field validation is to use
+`CustomValidator` to get value from another field when it's time to
+validate target field. It may look something like this
+
+```dart
+  final connector = StreamValidationConnector<String, String>(
+    field: 'password2',
+    stream: stateStream.map((state) => state.password2),
+    validator: CustomValidator<String>.withMessage(
+      message: (_) => 'Passwords doesn\'t match',
+      isValid: (String value) {
+        return state.password == value;
+      },
+    ),
+  );
+```
+
+Another possible solution could be is to validate value in the connected
+stream with bool validator usage:
+
+```dart
+  final connector = StreamValidationConnector<String, String>(
+    field: 'password2',
+    stream: stateStream.map((state) => state.password == state.password2),
+    validator: IsTrueValidator.withMessage('Passwords doesn\'t match'),
+  );
+```
 
 ### External validator package usage
 
