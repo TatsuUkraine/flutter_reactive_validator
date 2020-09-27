@@ -2,7 +2,8 @@ import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
 
 /// Base class with common logic for [ValidationConnector]'s
-abstract class BaseValidationConnector<K,I> implements ValidationConnector<K, I> {
+abstract class BaseValidationConnector<K, I>
+    implements ValidationConnector<K, I> {
   ValidationController<K> _controller;
 
   @override
@@ -15,7 +16,8 @@ abstract class BaseValidationConnector<K,I> implements ValidationConnector<K, I>
   @override
   void attach(ValidationController<K> controller) {
     if (_controller != null) {
-      throw UnsupportedError('Validator can be attached to only single controller');
+      throw UnsupportedError(
+          'Validator can be attached to only single controller');
     }
 
     _controller = controller;

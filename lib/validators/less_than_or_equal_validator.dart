@@ -4,20 +4,19 @@ import 'field_validator.dart';
 class LessThanOrEqualValidator<I extends num> extends FieldValidator<I> {
   final I max;
 
-  const LessThanOrEqualValidator(this.max, {
+  const LessThanOrEqualValidator(
+    this.max, {
     String fieldName,
     String errorMessage,
-  })  : super(
-    fieldName: fieldName,
-    message: errorMessage ?? 'should be less than or equal to $max',
-  );
+  }) : super(
+          fieldName: fieldName,
+          message: errorMessage ?? 'should be less than or equal to $max',
+        );
 
-  const LessThanOrEqualValidator.withMessage(
-    this.max,
-    String message
-  )   : super.withMessage(
-    message: message,
-  );
+  const LessThanOrEqualValidator.withMessage(this.max, String message)
+      : super.withMessage(
+          message: message,
+        );
 
   @override
   bool isValid(I value) => value <= max;

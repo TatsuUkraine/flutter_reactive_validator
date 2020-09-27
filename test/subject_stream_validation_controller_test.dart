@@ -4,7 +4,8 @@ import 'package:reactive_validator/contracts/stream_error_provider.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/subject_stream_validation_controller.dart';
 
-class MockedConnector extends Mock implements ValidationConnector<String, String> {}
+class MockedConnector extends Mock
+    implements ValidationConnector<String, String> {}
 
 void main() {
   test('should create empty validation controller', () {
@@ -17,9 +18,8 @@ void main() {
   });
 
   test('should create seeded validation controller', () {
-    final controller = SubjectStreamValidationController<String>.seeded({
-      'field': 'value'
-    });
+    final controller =
+        SubjectStreamValidationController<String>.seeded({'field': 'value'});
 
     expect(controller.errors, {
       'field': 'value',
@@ -30,9 +30,8 @@ void main() {
   });
 
   test('should return error provider', () {
-    final controller = SubjectStreamValidationController<String>.seeded({
-      'field': 'value'
-    });
+    final controller =
+        SubjectStreamValidationController<String>.seeded({'field': 'value'});
     final provider = controller.fieldErrorProvider('field');
 
     expect(provider, isInstanceOf<StreamErrorProvider<String>>());
@@ -149,8 +148,10 @@ void main() {
     final controller = SubjectStreamValidationController<String>();
 
     expect(controller.isValidStream, isInstanceOf<Stream<bool>>());
-    expect(controller.errorsStream, isInstanceOf<Stream<Map<String, String>>>());
-    expect(controller.fieldErrorStream('field'), isInstanceOf<Stream<String>>());
+    expect(
+        controller.errorsStream, isInstanceOf<Stream<Map<String, String>>>());
+    expect(
+        controller.fieldErrorStream('field'), isInstanceOf<Stream<String>>());
 
     controller.dispose();
   });

@@ -7,7 +7,9 @@ import 'package:reactive_validator/contracts/validator.dart';
 import 'package:reactive_validator/value_listenable_validation_connector.dart';
 
 class MockedValidator extends Mock implements Validator<String> {}
+
 class MockedController extends Mock implements ValidationController<String> {}
+
 class MockedListenable extends Mock implements ValueListenable<String> {}
 
 void main() {
@@ -139,7 +141,8 @@ void main() {
 
   test('should connect validator to the notifier', () {
     final notifier = ValueNotifier('');
-    final connector = notifier.connectValidator(field: 'field', validator: MockedValidator());
+    final connector =
+        notifier.connectValidator(field: 'field', validator: MockedValidator());
 
     expect(connector, isInstanceOf<ValidationConnector>());
     expect(connector.field, 'field');

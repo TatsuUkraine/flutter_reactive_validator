@@ -5,11 +5,11 @@ class IsFalseValidator extends EqualToValidator<bool> {
   const IsFalseValidator({
     String fieldName,
     String message = 'should be equal to false',
-  })  : super(
-    false,
-    fieldName: fieldName,
-    message: message,
-  );
+  }) : super(
+          false,
+          fieldName: fieldName,
+          message: message,
+        );
 
   const IsFalseValidator.withMessage(String message)
       : super.withMessage(false, message);

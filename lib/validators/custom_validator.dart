@@ -12,7 +12,6 @@ typedef String _MessageBuilder<I>(I value);
 /// or with [CustomValidator.message] callback to generate error message during the
 /// validation
 class CustomValidator<I> implements Validator<I> {
-
   /// Validation message callback
   final _MessageBuilder<I> message;
 
@@ -30,11 +29,11 @@ class CustomValidator<I> implements Validator<I> {
     @required _MessageBuilder<I> message,
     @required _Validator<I> isValid,
     bool ignoreNullable = true,
-  }): this.withMessage(
-    isValid: isValid,
-    ignoreNullable: ignoreNullable,
-    message: (value) => '${fieldName ?? 'Field'} ${message(value)}',
-  );
+  }) : this.withMessage(
+          isValid: isValid,
+          ignoreNullable: ignoreNullable,
+          message: (value) => '${fieldName ?? 'Field'} ${message(value)}',
+        );
 
   const CustomValidator.withMessage({
     @required this.message,
@@ -43,7 +42,6 @@ class CustomValidator<I> implements Validator<I> {
   });
 
   @override
-  String call(I value) => ignoreNullable && value == null || isValid(value)
-      ? null
-      : message(value);
+  String call(I value) =>
+      ignoreNullable && value == null || isValid(value) ? null : message(value);
 }

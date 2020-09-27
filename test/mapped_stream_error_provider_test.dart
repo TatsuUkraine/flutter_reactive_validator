@@ -12,14 +12,16 @@ void main() {
       'field': 'error',
     });
 
-    final provider = MappedStreamErrorProvider<String>('field', streamWithError);
+    final provider =
+        MappedStreamErrorProvider<String>('field', streamWithError);
 
     expect(provider.hasError, true);
 
     final stream = MockedStream();
     when(streamWithError.value).thenReturn({});
 
-    final providerWithoutValue = MappedStreamErrorProvider<String>('field', stream);
+    final providerWithoutValue =
+        MappedStreamErrorProvider<String>('field', stream);
 
     expect(providerWithoutValue.hasError, false);
   });
@@ -27,9 +29,12 @@ void main() {
   test('should compare provider', () {
     final streamWithError = MockedStream();
 
-    final provider1 = MappedStreamErrorProvider<String>('field', streamWithError);
-    final provider2 = MappedStreamErrorProvider<String>('field', streamWithError);
-    final provider3 = MappedStreamErrorProvider<String>('field2', streamWithError);
+    final provider1 =
+        MappedStreamErrorProvider<String>('field', streamWithError);
+    final provider2 =
+        MappedStreamErrorProvider<String>('field', streamWithError);
+    final provider3 =
+        MappedStreamErrorProvider<String>('field2', streamWithError);
 
     expect(provider1 == provider2, isTrue);
     expect(provider1 == provider3, isFalse);

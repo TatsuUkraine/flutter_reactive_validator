@@ -4,20 +4,19 @@ import 'field_validator.dart';
 class MaxCharactersValidator extends FieldValidator<String> {
   final int max;
 
-  const MaxCharactersValidator(this.max, {
+  const MaxCharactersValidator(
+    this.max, {
     String fieldName,
     String errorMessage,
-  })  : super(
-    fieldName: fieldName,
-    message: errorMessage ?? 'can contain maximum $max characters',
-  );
+  }) : super(
+          fieldName: fieldName,
+          message: errorMessage ?? 'can contain maximum $max characters',
+        );
 
-  const MaxCharactersValidator.withMessage(
-    this.max,
-    String message
-  )   : super.withMessage(
-    message: message,
-  );
+  const MaxCharactersValidator.withMessage(this.max, String message)
+      : super.withMessage(
+          message: message,
+        );
 
   @override
   bool isValid(String value) => value.length <= max;

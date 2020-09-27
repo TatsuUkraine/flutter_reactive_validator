@@ -12,8 +12,7 @@ import '../contracts/validator.dart';
 class OrValidator<I> implements Validator<I> {
   final Iterable<Validator<I>> validators;
 
-  const OrValidator(this.validators)
-      : assert(validators != null);
+  const OrValidator(this.validators) : assert(validators != null);
 
   @override
   String call(I value) {
@@ -30,5 +29,4 @@ class OrValidator<I> implements Validator<I> {
 
     return lastError;
   }
-
 }

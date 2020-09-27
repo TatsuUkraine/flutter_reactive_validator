@@ -13,7 +13,8 @@ void main() {
   test('validation should succeeded', () {
     final validator = BeforeDateTimeValidator(DateTime.now());
 
-    final isValid = validator.isValid(DateTime.now().subtract(Duration(minutes: 1)));
+    final isValid =
+        validator.isValid(DateTime.now().subtract(Duration(minutes: 1)));
 
     expect(isValid, isTrue);
   });
