@@ -192,6 +192,8 @@ class SomeValidator<I> implements Validator<I> {
     fieldName: 'Field name',
     message: (String value) {
       /// return error message
+      /// 
+      /// Callback will be invoked only when [isValid] returns false
     },
     isValid: (String value) {
       /// validate [value]
@@ -203,6 +205,8 @@ class SomeValidator<I> implements Validator<I> {
   final validator = CustomValidator<String>.withMessage(
     message: (String value) {
       /// return error message
+      /// 
+      /// Callback will be invoked only when [isValid] returns false
     },
     isValid: (String value) {
       /// validate [value]
@@ -215,5 +219,5 @@ First constructor will concat `fieldName` and message from the `message`
 callback.
 
 Second one - will use error message from the builder as it is. So ensure
-that error message is returned otherwise `ValidationConnector` will
+that error message is returned, otherwise `ValidationConnector` will
 think that validation is valid
