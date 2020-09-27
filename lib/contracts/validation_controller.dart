@@ -1,6 +1,7 @@
 import 'error_provider.dart';
 import 'validation_connector.dart';
 
+/// Base validation controller interface
 abstract class ValidationController<K> {
   /// Attach multiple [ValidationConnector] to the controller
   void attachConnectors(Iterable<ValidationConnector<K, Object>> connectors);
