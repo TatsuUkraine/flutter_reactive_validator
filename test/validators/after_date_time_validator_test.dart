@@ -5,7 +5,8 @@ void main() {
   test('validation should fail', () {
     final validator = AfterDateTimeValidator(DateTime.now());
 
-    final isValid = validator.isValid(DateTime.now().subtract(Duration(minutes: 1)));
+    final isValid =
+        validator.isValid(DateTime.now().subtract(Duration(minutes: 1)));
 
     expect(isValid, isFalse);
   });

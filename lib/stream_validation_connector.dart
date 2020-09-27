@@ -15,10 +15,8 @@ import 'contracts/validator.dart';
 /// Requires to be attached to the controller.
 ///
 /// As soon as it attaches to controller, it starts listen provided stream.
-class StreamValidationConnector<K, I>
-    extends BaseValidationConnector<K,I>
+class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
     implements ValidationConnector<K, I> {
-
   /// [Stream] with value that should be validated
   final Stream<I> stream;
 
@@ -135,20 +133,21 @@ class StreamValidationConnector<K, I>
 }
 
 /// Extension to create [ValidationConnector] from a [Stream] object
-extension StreamConnectorExtention<K,I> on Stream<I> {
+extension StreamConnectorExtention<K, I> on Stream<I> {
   /// Connect validator to the [Stream] object
-  ValidationConnector<K,I> connectValidator({
+  ValidationConnector<K, I> connectValidator({
     @required K field,
     @required Validator<I> validator,
     bool clearOnChange = true,
     bool validateOnChange = false,
     bool validateOnAttach = false,
-  }) => StreamValidationConnector<K,I>(
-    field: field,
-    stream: this,
-    validator: validator,
-    clearOnChange: clearOnChange,
-    validateOnChange: validateOnChange,
-    validateOnAttach: validateOnAttach,
-  );
+  }) =>
+      StreamValidationConnector<K, I>(
+        field: field,
+        stream: this,
+        validator: validator,
+        clearOnChange: clearOnChange,
+        validateOnChange: validateOnChange,
+        validateOnAttach: validateOnAttach,
+      );
 }

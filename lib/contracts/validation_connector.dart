@@ -1,7 +1,7 @@
 import 'validation_controller.dart';
 
 /// Defines relation between data and validation
-abstract class ValidationConnector<K,I> {
+abstract class ValidationConnector<K, I> {
   /// Field key for error message
   K get field;
 

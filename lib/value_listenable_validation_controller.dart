@@ -6,27 +6,24 @@ import 'contracts/error_provider.dart';
 import 'contracts/validation_connector.dart';
 import 'contracts/listenable_validation_controller.dart';
 
-
 /// Validation controller that contains current state of validation.
 ///
 /// Can be used to insert custom validation messages provided from API
 /// or can be managed by [ValidationConnector]'s on data stream changes.
 ///
 /// Works with [ValueNotifier] as a controller.
-class ValueListenableValidationController<K>
-    extends BaseValidationController<K>
+class ValueListenableValidationController<K> extends BaseValidationController<K>
     implements ListenableValidationController<K> {
-
   final ValueNotifier<Map<K, String>> _valueNotifier;
 
   ValueListenableValidationController({
-    List<ValidationConnector<K,Object>> connectors = const [],
+    List<ValidationConnector<K, Object>> connectors = const [],
   })  : _valueNotifier = ValueNotifier<Map<K, String>>({}),
         super(connectors);
 
   ValueListenableValidationController.seeded(
     Map<K, String> errors, {
-    List<ValidationConnector<K,Object>> connectors = const [],
+    List<ValidationConnector<K, Object>> connectors = const [],
   })  : _valueNotifier = ValueNotifier<Map<K, String>>(errors),
         super(connectors);
 

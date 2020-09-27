@@ -6,8 +6,6 @@ import 'contracts/stream_validation_controller.dart';
 import 'contracts/validation_connector.dart';
 import 'mapped_stream_error_provider.dart';
 
-
-
 /// Validation controller that contains current state of validation.
 ///
 /// Can be used to insert custom validation messages provided from API
@@ -17,23 +15,22 @@ import 'mapped_stream_error_provider.dart';
 ///
 /// Which means that all streams, that provided by this controller, will emit last value
 /// to the listeners as soon as they subscribe.
-class SubjectStreamValidationController<K>
-    extends BaseValidationController<K>
+class SubjectStreamValidationController<K> extends BaseValidationController<K>
     implements StreamValidationController<K> {
-
   final BehaviorSubject<Map<K, String>> _streamController;
 
   SubjectStreamValidationController({
     bool sync: false,
-    List<ValidationConnector<K,Object>> connectors = const [],
+    List<ValidationConnector<K, Object>> connectors = const [],
   })  : _streamController = BehaviorSubject<Map<K, String>>(sync: sync),
         super(connectors);
 
   SubjectStreamValidationController.seeded(
     Map<K, String> errors, {
     bool sync: false,
-    List<ValidationConnector<K,Object>> connectors = const [],
-  })  : _streamController = BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync),
+    List<ValidationConnector<K, Object>> connectors = const [],
+  })  : _streamController =
+            BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync),
         super(connectors);
 
   @override
@@ -41,17 +38,18 @@ class SubjectStreamValidationController<K>
       MappedStreamErrorProvider<K>(field, _streamController.stream);
 
   @override
-  Stream<String> fieldErrorStream(K field) => errorsStream
-      .map((errors) => errors[field]);
+  Stream<String> fieldErrorStream(K field) =>
+      errorsStream.map((errors) => errors[field]);
 
   @override
   Stream<Map<K, String>> get errorsStream => _streamController.stream;
 
   @override
   Map<K, String> get errors => _streamController.value ?? {};
-  
+
   @override
-  Stream<bool> get isValidStream => errorsStream.map((errors) => errors.isEmpty);
+  Stream<bool> get isValidStream =>
+      errorsStream.map((errors) => errors.isEmpty);
 
   @override
   void addErrors(Map<K, String> errors) => _streamController.sink.add(errors);

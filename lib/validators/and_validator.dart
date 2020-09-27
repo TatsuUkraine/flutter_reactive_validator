@@ -11,8 +11,7 @@ import '../contracts/validator.dart';
 class AndValidator<I> implements Validator<I> {
   final Iterable<Validator<I>> validators;
 
-  const AndValidator(this.validators)
-      : assert(validators != null);
+  const AndValidator(this.validators) : assert(validators != null);
 
   @override
   String call(I value) {
@@ -26,5 +25,4 @@ class AndValidator<I> implements Validator<I> {
 
     return null;
   }
-
 }

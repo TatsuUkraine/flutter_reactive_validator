@@ -21,18 +21,17 @@ abstract class FieldValidator<I> implements Validator<I> {
     String fieldName,
     @required String message,
     this.ignoreNullable = true,
-  })  : message = '${fieldName ?? 'Field'} $message';
+  }) : message = '${fieldName ?? 'Field'} $message';
 
   /// Defines full validation message if validation fails.
   const FieldValidator.withMessage({
     @required this.message,
     this.ignoreNullable = true,
-  })  : assert(message != null);
+  }) : assert(message != null);
 
   @override
-  String call(I value) => ignoreNullable && value == null || isValid(value)
-      ? null
-      : message;
+  String call(I value) =>
+      ignoreNullable && value == null || isValid(value) ? null : message;
 
   /// Validation function
   bool isValid(I value);

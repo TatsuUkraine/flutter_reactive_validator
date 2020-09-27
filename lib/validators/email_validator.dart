@@ -12,22 +12,20 @@ class EmailValidator extends FieldValidator<String> {
     String errorMessage,
     this.allowTopLevelDomains = false,
     this.allowInternational = true,
-  })  : super(
-    fieldName: fieldName,
-    message: errorMessage ?? 'value should be a valid email',
-  );
+  }) : super(
+          fieldName: fieldName,
+          message: errorMessage ?? 'value should be a valid email',
+        );
 
-  const EmailValidator.withMessage(String message, {
+  const EmailValidator.withMessage(
+    String message, {
     this.allowTopLevelDomains = false,
     this.allowInternational = true,
-  })  : super.withMessage(
-    message: message,
-  );
+  }) : super.withMessage(
+          message: message,
+        );
 
   @override
   bool isValid(value) => v.EmailValidator.validate(
-    value,
-    allowTopLevelDomains,
-    allowInternational
-  );
+      value, allowTopLevelDomains, allowInternational);
 }

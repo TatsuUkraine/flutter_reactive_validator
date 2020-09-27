@@ -8,8 +8,11 @@ import 'package:reactive_validator/contracts/validator.dart';
 import 'package:reactive_validator/stream_validation_connector.dart';
 
 class MockedValidator extends Mock implements Validator<String> {}
+
 class MockedController extends Mock implements ValidationController<String> {}
+
 class MockedStream extends Mock implements Stream<String> {}
+
 class MockedSubscription extends Mock implements StreamSubscription<String> {}
 
 void main() {
@@ -107,7 +110,6 @@ void main() {
       stream: stream,
     );
 
-
     when(stream.listen(argThat(anything))).thenReturn(subscription);
 
     connector.attach(controller);
@@ -168,7 +170,8 @@ void main() {
 
   test('should connect validator to the notifier', () {
     final controller = StreamController();
-    final connector = controller.stream.connectValidator(field: 'field', validator: MockedValidator());
+    final connector = controller.stream
+        .connectValidator(field: 'field', validator: MockedValidator());
 
     expect(connector, isInstanceOf<ValidationConnector>());
     expect(connector.field, 'field');

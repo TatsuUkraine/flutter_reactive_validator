@@ -14,9 +14,7 @@ import 'contracts/validator.dart';
 ///
 /// As soon as it attaches to controller, it starts listen provided [ValueListenable].
 class ValueListenableValidationConnector<K, I>
-    extends BaseValidationConnector<K,I>
-    implements ValidationConnector<K, I> {
-
+    extends BaseValidationConnector<K, I> implements ValidationConnector<K, I> {
   /// [ValueListenable] with value that should be validated
   final ValueListenable<I> valueListenable;
 
@@ -84,20 +82,21 @@ class ValueListenableValidationConnector<K, I>
 }
 
 /// Extension to create [ValidationConnector] from a [ValueListenable] object
-extension ValueListenableConnectorExtention<K,I> on ValueListenable<I> {
+extension ValueListenableConnectorExtention<K, I> on ValueListenable<I> {
   /// Connect validator to the [ValueListenable] object
-  ValidationConnector<K,I> connectValidator({
+  ValidationConnector<K, I> connectValidator({
     @required K field,
     @required Validator<I> validator,
     bool clearOnChange = true,
     bool validateOnChange = false,
     bool validateOnAttach = false,
-  }) => ValueListenableValidationConnector<K,I>(
-    field: field,
-    valueListenable: this,
-    validator: validator,
-    clearOnChange: clearOnChange,
-    validateOnChange: validateOnChange,
-    validateOnAttach: validateOnAttach,
-  );
+  }) =>
+      ValueListenableValidationConnector<K, I>(
+        field: field,
+        valueListenable: this,
+        validator: validator,
+        clearOnChange: clearOnChange,
+        validateOnChange: validateOnChange,
+        validateOnAttach: validateOnAttach,
+      );
 }

@@ -3,9 +3,10 @@ import 'package:reactive_validator/reactive_validator.dart';
 /// Base class with common logic for [ValidationController]'s
 abstract class BaseValidationController<K> implements ValidationController<K> {
   /// Set of connected [ValidationConnector]'s
-  List<ValidationConnector<K,Object>> _connectors = [];
+  List<ValidationConnector<K, Object>> _connectors = [];
 
-  BaseValidationController([List<ValidationConnector<K,Object>> connectors = const []]) {
+  BaseValidationController(
+      [List<ValidationConnector<K, Object>> connectors = const []]) {
     attachConnectors(connectors);
   }
 
@@ -21,9 +22,7 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
       return;
     }
 
-    addErrors(
-      {...errors}..remove(field)
-    );
+    addErrors({...errors}..remove(field));
   }
 
   @override
@@ -37,20 +36,18 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
   @override
   void addFieldError(K field, String error) => addErrors({
-    ...errors,
-    field: error,
-  });
+        ...errors,
+        field: error,
+      });
 
   @override
   Future<void> validate() {
     return Future.wait(
-        _connectors.map<Future<_ValidationResult<K>>>((connector) {
-          return Future.microtask(() => _ValidationResult<K>(
-            connector.field,
-            connector.validate()
-          ));
-        }).toList()
-    ).then((collection) {
+            _connectors.map<Future<_ValidationResult<K>>>((connector) {
+      return Future.microtask(
+          () => _ValidationResult<K>(connector.field, connector.validate()));
+    }).toList())
+        .then((collection) {
       return collection.fold<Map<K, String>>({}, (value, result) {
         if (!result.hasError) {
           return value;
