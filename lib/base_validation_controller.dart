@@ -3,6 +3,10 @@ import 'package:reactive_validator/reactive_validator.dart';
 abstract class BaseValidationController<K> implements ValidationController<K> {
   List<ValidationConnector<K,Object>> _connectors = [];
 
+  BaseValidationController([List<ValidationConnector<K,Object>> connectors = const []]) {
+    attachConnectors(connectors);
+  }
+
   @override
   String fieldError(K field) => errors[field];
 

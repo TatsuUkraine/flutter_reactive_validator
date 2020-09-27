@@ -23,11 +23,18 @@ class SubjectStreamValidationController<K>
 
   final BehaviorSubject<Map<K, String>> _streamController;
 
-  SubjectStreamValidationController({bool sync: false})
-      : _streamController = BehaviorSubject<Map<K, String>>(sync: sync);
+  SubjectStreamValidationController({
+    bool sync: false,
+    List<ValidationConnector<K,Object>> connectors = const [],
+  })  : _streamController = BehaviorSubject<Map<K, String>>(sync: sync),
+        super(connectors);
 
-  SubjectStreamValidationController.seeded(Map<K, String> errors, {bool sync: false})
-      : _streamController = BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync);
+  SubjectStreamValidationController.seeded(
+    Map<K, String> errors, {
+    bool sync: false,
+    List<ValidationConnector<K,Object>> connectors = const [],
+  })  : _streamController = BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync),
+        super(connectors);
 
   @override
   StreamErrorProvider<K> fieldErrorProvider(K field) =>
