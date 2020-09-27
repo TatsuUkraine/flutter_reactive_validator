@@ -7,12 +7,12 @@ and Value Notifiers.
 
 It provides ability to define scoped validation rules for set of stream
 or value listenable objects. Also it allows to manage error state
-manually to render validation response from the Server or any other
+manually to manage validation response from the Server or any other
 resource.
 
-In addition to error management this package also provides sett of
+In addition to error management this package also provides set of
 validators for some common validation cases. If need - any callable
-validator instance can be used to validate target value
+validator instance can be used to validate target value.
 
 ## Table Of Contents
 
@@ -49,7 +49,7 @@ StreamValidationController<String> controller = SubjectStreamValidationControlle
 ListenableValidationController<String> controller = ValueListenableValidationController<String>();
 ```
 
-Define and attach value for notification
+Define and attach validation connectors
 
 ```dart
 /// Connectors can be attached or with controller constructor, or with
