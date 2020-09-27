@@ -83,6 +83,7 @@ class ValueListenableValidationConnector<K, I>
   }
 }
 
+/// Extension to create [ValidationConnector] from a [ValueListenable] object
 extension ValueListenableConnectorExtention<K,I> on ValueListenable<I> {
   /// Connect validator to the [ValueListenable] object
   ValidationConnector<K,I> connectValidator({

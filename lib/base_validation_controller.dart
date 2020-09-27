@@ -1,6 +1,8 @@
 import 'package:reactive_validator/reactive_validator.dart';
 
+/// Base class with common logic for [ValidationController]'s
 abstract class BaseValidationController<K> implements ValidationController<K> {
+  /// Set of connected [ValidationConnector]'s
   List<ValidationConnector<K,Object>> _connectors = [];
 
   BaseValidationController([List<ValidationConnector<K,Object>> connectors = const []]) {
@@ -90,11 +92,16 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
   }
 }
 
+/// Validation result
 class _ValidationResult<K> {
+  /// Field name
   final K field;
+
+  /// Validation error message
   final String error;
 
   _ValidationResult(this.field, this.error);
 
+  /// If result has error message
   bool get hasError => error != null;
 }
