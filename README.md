@@ -86,8 +86,8 @@ massage from the error bucket. It can be particularly useful if you
 validate your values, submit data to the server (if it's valid) and
 receive validation error, which you want to show to the user.
 
-**Important** Don't forget to `dispose` your controller when you need
-it.
+**Important** Don't forget to `dispose` your controller when you no need
+it anymore.
 
 ### StreamValidationController
 
