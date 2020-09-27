@@ -180,6 +180,15 @@ To prevent collision, connector can't invoke validation on change and
 clear validation error on change. Which means that both `validateOnChange`
 and `clearOnChange` can't be `true` in the same time.
 
+#### Stream validation specific
+
+Take into account that this connector will validate value only after at
+least one event was emitted in the `Stream`. If you want to validate
+value even if no event was emitted use
+`StreamValidationConnector.seeded` constructor. Or use stream from
+`BehaviorSubject` from RxDart package so event could be fired as soon as
+connector subscribes to it during attach.
+
 ### Create validation connector
 
 Validation connector can be created in 2 ways. First one with just
