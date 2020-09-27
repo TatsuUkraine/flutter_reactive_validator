@@ -1,6 +1,6 @@
 import 'field_validator.dart';
 
-/// Validate if [DateTime] is after validated value
+/// Validates if value is after defined [DateTime]
 class AfterDateTimeValidator extends FieldValidator<DateTime> {
   final DateTime dateTime;
   final String Function(DateTime) formatter;
