@@ -68,6 +68,42 @@ Or add error message manually
 controller.addFieldError('field', 'error');
 ```
 
+## Validation controller
+
+Controller is a manager of your validation state.
+
+Package provides controller based on `ValueNotifier` object and
+controller based on `BehaviorSubject` stream controller.
+
+Both gives you ability to get error messages or `ErrorProvider` in a
+sync way.
+
+Also they're gives you sync access to the all errors `Map` and
+validation status.
+
+Controller also gives you ability to add or remove any validation error
+massage from the error bucket. It can be particularly useful if you
+validate your values, submit data to the server (if it's valid) and
+receive validation error, which you want to show to the user.
+
+**Important** Don't forget to `dispose` your controller when you need
+it.
+
+### StreamValidationController
+
+`StreamValidationController`, which is implemented by
+`SubjectStreamValidationController` aside of default access methods,
+also gives you access error streams. Like `isValidStream`,
+`errorsStream`, `fieldErrorStream` etc.
+
+Also, this implementation provides you extended `ErrorProvider` that
+contains reference to the stream with field error.
+
+**Note** Since `SubjectStreamValidationController` uses
+`BehaviorSubject` from the RxDart, `StreamErrorProvider` also ensures
+that provided stream won't emit value as soon as anyone subscribes on
+it.
+
 ## Validation connectors
 
 Package provides 2 types of validation connectors to provide relation
@@ -185,7 +221,27 @@ class SomeValidator<I> implements Validator<I> {
 }
 ```
 
-2. Use `CustomValidator`
+2. Extend from `FieldValidator`
+
+```dart
+class SomeValidator extends FieldValidator<String> {
+  /// implement your constructor
+  const SomeValidator({
+    String fieldName,
+    String errorMessage,
+  })  : super(
+    fieldName: fieldName,
+    message: errorMessage ?? 'value should be a valid',
+  );
+
+  @override
+  bool isValid(value) {
+    /// you validation goes here
+  }
+}
+```
+
+3. Use `CustomValidator`
 
 ```dart
   final validator = CustomValidator<String>(
@@ -221,3 +277,10 @@ callback.
 Second one - will use error message from the builder as it is. So ensure
 that error message is returned, otherwise `ValidationConnector` will
 think that validation is valid
+
+### External validator package usage
+
+If needed, this package can use any external validator packages. For
+instance you can take a look at `EmailValidator`, which uses
+[email_validator](https://pub.dev/packages/email_validator) package to
+validate if value is a valid email value.
