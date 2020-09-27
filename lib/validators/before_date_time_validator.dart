@@ -1,6 +1,6 @@
 import 'field_validator.dart';
 
-/// Validate if [DateTime] is before validated value
+/// Validates if value is before defined [DateTime]
 class BeforeDateTimeValidator extends FieldValidator<DateTime> {
   final DateTime dateTime;
   final String Function(DateTime) formatter;

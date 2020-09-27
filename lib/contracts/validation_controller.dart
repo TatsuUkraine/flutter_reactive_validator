@@ -1,14 +1,27 @@
 import 'error_provider.dart';
 import 'validation_connector.dart';
 
+/// Base validation controller interface
 abstract class ValidationController<K> {
   /// Attach multiple [ValidationConnector] to the controller
   void attachConnectors(Iterable<ValidationConnector<K, Object>> connectors);
 
-  /// Add [ValidationConnector] to the active list
+  /// Add [ValidationConnector] to the active list.
+  ///
+  /// This method doesn't actually attach connector,
+  /// which means that connector won't track any value changes.
+  ///
+  /// To properly add connector use [attachConnectors] or
+  /// [ValidationConnector.attach]
   void addConnector(ValidationConnector<K, Object> connector);
 
-  /// Remove [ValidationConnector]
+  /// Remove [ValidationConnector].
+  ///
+  /// This method doesn't detach connector, which means that connector
+  /// still will be thinking that he's attached to the controller
+  ///
+  /// To properly remove connector use
+  /// [ValidationConnector.detach]
   void removeConnector(ValidationConnector<K, Object> connector);
 
   /// Provides [ErrorProvider] with validation error value and stream

@@ -1,3 +1,4 @@
+/// Provides info about field validation
 abstract class ErrorProvider<K> {
   /// Field key
   K get field;

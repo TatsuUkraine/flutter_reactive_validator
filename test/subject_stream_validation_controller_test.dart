@@ -154,4 +154,36 @@ void main() {
 
     controller.dispose();
   });
+
+  test('should attach connectors on create', () {
+    final connector = MockedConnector();
+    final controller = SubjectStreamValidationController<String>(
+      connectors: [
+        connector,
+      ],
+    );
+
+    verify(connector.attach(controller)).called(1);
+  });
+
+  test('should attach connectors on seeded controller create', () {
+    final connector = MockedConnector();
+    final controller = SubjectStreamValidationController<String>.seeded(
+      {},
+      connectors: [
+        connector,
+      ],
+    );
+
+    verify(connector.attach(controller)).called(1);
+  });
+
+  test('should attach connectors', () {
+    final connector = MockedConnector();
+    final controller = SubjectStreamValidationController<String>();
+
+    controller.attachConnectors([connector]);
+
+    verify(connector.attach(controller)).called(1);
+  });
 }

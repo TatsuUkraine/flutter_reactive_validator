@@ -1,6 +1,7 @@
 import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
 
+/// Base class with common logic for [ValidationConnector]'s
 abstract class BaseValidationConnector<K,I> implements ValidationConnector<K, I> {
   ValidationController<K> _controller;
 

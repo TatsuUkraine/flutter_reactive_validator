@@ -1,6 +1,6 @@
 import 'equal_to_validator.dart';
 
-/// Checks if provided value is equal to `true`
+/// Checks if provided value is `false`
 class IsFalseValidator extends EqualToValidator<bool> {
   const IsFalseValidator({
     String fieldName,

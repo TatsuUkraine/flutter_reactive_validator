@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'field_validator.dart';
 
 /// Validates if [String] is not empty

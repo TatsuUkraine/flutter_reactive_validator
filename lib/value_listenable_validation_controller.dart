@@ -19,11 +19,16 @@ class ValueListenableValidationController<K>
 
   final ValueNotifier<Map<K, String>> _valueNotifier;
 
-  ValueListenableValidationController()
-      : _valueNotifier = ValueNotifier<Map<K, String>>({});
+  ValueListenableValidationController({
+    List<ValidationConnector<K,Object>> connectors = const [],
+  })  : _valueNotifier = ValueNotifier<Map<K, String>>({}),
+        super(connectors);
 
-  ValueListenableValidationController.seeded(Map<K, String> errors)
-      : _valueNotifier = ValueNotifier<Map<K, String>>(errors);
+  ValueListenableValidationController.seeded(
+    Map<K, String> errors, {
+    List<ValidationConnector<K,Object>> connectors = const [],
+  })  : _valueNotifier = ValueNotifier<Map<K, String>>(errors),
+        super(connectors);
 
   @override
   ErrorProvider<K> fieldErrorProvider(K field) =>

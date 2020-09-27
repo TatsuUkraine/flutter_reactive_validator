@@ -6,6 +6,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   @override
   final K field;
 
+  /// [Stream] with errors
   final ValueStream<Map<K, String>> _valueStream;
 
   const MappedStreamErrorProvider(this.field, this._valueStream);
@@ -25,6 +26,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
     return _valueStream.map(_transform);
   }
 
+  /// Transformer to find error among error [Map]
   String _transform(Map<K, String> errors) => (errors ?? {})[field];
 
   @override

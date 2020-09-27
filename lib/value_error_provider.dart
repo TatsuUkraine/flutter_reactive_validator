@@ -1,5 +1,6 @@
 import 'contracts/error_provider.dart';
 
+/// Provides info about field validation
 class ValueErrorProvider<K> implements ErrorProvider<K> {
   @override
   final K field;

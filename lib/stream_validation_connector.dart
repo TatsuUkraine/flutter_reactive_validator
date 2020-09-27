@@ -134,6 +134,7 @@ class StreamValidationConnector<K, I>
   }
 }
 
+/// Extension to create [ValidationConnector] from a [Stream] object
 extension StreamConnectorExtention<K,I> on Stream<I> {
   /// Connect validator to the [Stream] object
   ValidationConnector<K,I> connectValidator({
