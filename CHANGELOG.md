@@ -1,3 +1,7 @@
+## [1.0.0+1] - 2020-09-28
+
+- Documentation improvements
+
 ## [1.0.0] - 2020-09-28
 
 - Stable release
