@@ -2,6 +2,8 @@ import 'package:reactive_validator/reactive_validator.dart';
 
 /// Base class with common logic for [ValidationController]'s
 abstract class BaseValidationController<K> implements ValidationController<K> {
+  bool _disposed = false;
+
   /// Set of connected [ValidationConnector]'s
   List<ValidationConnector<K, Object>> _connectors = [];
 
@@ -15,6 +17,9 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
   @override
   bool get isValid => errors.isEmpty;
+
+  @override
+  bool get disposed => _disposed;
 
   @override
   void clearFieldError(K field) {
@@ -63,6 +68,8 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
   @override
   void dispose() {
+    _disposed = true;
+
     [..._connectors].forEach((validator) {
       validator.detach();
     });
@@ -78,6 +85,11 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
   @override
   void removeConnector(ValidationConnector<K, Object> connector) {
     _connectors.remove(connector);
+
+    if (_disposed) {
+      return;
+    }
+
     clearFieldError(connector.field);
   }
 

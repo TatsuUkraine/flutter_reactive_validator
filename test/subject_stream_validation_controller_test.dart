@@ -165,6 +165,8 @@ void main() {
     );
 
     verify(connector.attach(controller)).called(1);
+
+    controller.dispose();
   });
 
   test('should attach connectors on seeded controller create', () {
@@ -177,6 +179,8 @@ void main() {
     );
 
     verify(connector.attach(controller)).called(1);
+
+    controller.dispose();
   });
 
   test('should attach connectors', () {
@@ -186,5 +190,25 @@ void main() {
     controller.attachConnectors([connector]);
 
     verify(connector.attach(controller)).called(1);
+
+    controller.dispose();
+  });
+
+  test('shouldn\'t remove errors on dispose', () {
+    final controller = SubjectStreamValidationController<String>(sync: true);
+    final connector = MockedConnector();
+
+    controller.addConnector(connector);
+
+    when(connector.field).thenReturn('field');
+
+    controller.addFieldError('field', 'error');
+    expect(controller.isValid, isFalse);
+
+    controller.dispose();
+
+    controller.removeConnector(connector);
+
+    expect(controller.isValid, isFalse);
   });
 }

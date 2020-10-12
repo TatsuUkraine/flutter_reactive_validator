@@ -39,6 +39,9 @@ abstract class ValidationController<K> {
   /// Sync access to validation state
   bool get isValid;
 
+  /// Returns `true` whenever controller is disposed
+  bool get disposed;
+
   /// Remove error message from particular field
   void clearFieldError(K field);
 
@@ -56,6 +59,6 @@ abstract class ValidationController<K> {
 
   /// Dispose method.
   ///
-  /// In should be invoked when [ValidationController] no longer needed
+  /// It should be invoked when [ValidationController] no longer needed
   void dispose();
 }
