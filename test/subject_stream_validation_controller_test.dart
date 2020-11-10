@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/stream_error_provider.dart';
+import 'package:reactive_validator/contracts/stream_errors_provider.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/subject_stream_validation_controller.dart';
 
@@ -37,6 +38,19 @@ void main() {
     expect(provider, isInstanceOf<StreamErrorProvider<String>>());
     expect(provider.field, 'field');
     expect(provider.value, 'value');
+    expect(provider.hasError, isTrue);
+
+    controller.dispose();
+  });
+
+  test('should return multiple errors provider', () {
+    final controller =
+    SubjectStreamValidationController<String>.seeded({'field': 'value'});
+    final provider = controller.fieldsErrorProvider(['field', 'field2']);
+
+    expect(provider, isInstanceOf<StreamErrorsProvider<String>>());
+    expect(provider.fields, ['field', 'field2']);
+    expect(provider.value, ['value']);
     expect(provider.hasError, isTrue);
 
     controller.dispose();
@@ -152,6 +166,16 @@ void main() {
         controller.errorsStream, isInstanceOf<Stream<Map<String, String>>>());
     expect(
         controller.fieldErrorStream('field'), isInstanceOf<Stream<String>>());
+
+    controller.dispose();
+  });
+
+  test('should provide streams with multiple fields', () {
+    final controller = SubjectStreamValidationController<String>();
+    expect(
+      controller.fieldsErrorStream(['field']),
+      isInstanceOf<Stream<Iterable<String>>>()
+    );
 
     controller.dispose();
   });
