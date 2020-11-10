@@ -28,7 +28,7 @@ class MappedStreamErrorsProvider<K> implements StreamErrorsProvider<K> {
   }
 
   /// Transformer to find error among error [Map]
-  List<String> _transform(Map<K, String> errors) =>
+  Iterable<String> _transform(Map<K, String> errors) =>
       filterErrors(fields, errors ?? const {});
 
   @override
