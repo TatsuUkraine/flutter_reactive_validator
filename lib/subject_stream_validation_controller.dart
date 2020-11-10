@@ -2,9 +2,12 @@ import 'package:rxdart/rxdart.dart';
 
 import 'base_validation_controller.dart';
 import 'contracts/stream_error_provider.dart';
+import 'contracts/stream_errors_provider.dart';
 import 'contracts/stream_validation_controller.dart';
 import 'contracts/validation_connector.dart';
 import 'mapped_stream_error_provider.dart';
+import 'mapped_stream_errors_provider.dart';
+import 'utils.dart';
 
 /// Validation controller that contains current state of validation.
 ///
@@ -38,8 +41,16 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
       MappedStreamErrorProvider<K>(field, _streamController.stream);
 
   @override
+  StreamErrorsProvider<K> fieldsErrorProvider(Iterable<K> fields) =>
+      MappedStreamErrorsProvider<K>(fields, _streamController.stream);
+
+  @override
   Stream<String> fieldErrorStream(K field) =>
       errorsStream.map((errors) => errors[field]);
+
+  @override
+  Stream<Iterable<String>> fieldsErrorStream(Iterable<K> fields) =>
+      errorsStream.map((errors) => filterErrors(fields, errors));
 
   @override
   Stream<Map<K, String>> get errorsStream => _streamController.stream;

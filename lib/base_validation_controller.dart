@@ -1,5 +1,7 @@
 import 'package:reactive_validator/reactive_validator.dart';
 
+import 'utils.dart';
+
 /// Base class with common logic for [ValidationController]'s
 abstract class BaseValidationController<K> implements ValidationController<K> {
   bool _disposed = false;
@@ -14,6 +16,10 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
   @override
   String fieldError(K field) => errors[field];
+
+  @override
+  Iterable<String> fieldsError(Iterable<K> fields) =>
+      filterErrors(fields, errors);
 
   @override
   bool get isValid => errors.isEmpty;

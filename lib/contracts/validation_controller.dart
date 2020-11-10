@@ -1,4 +1,5 @@
 import 'error_provider.dart';
+import 'errors_provider.dart';
 import 'validation_connector.dart';
 
 /// Base validation controller interface
@@ -24,14 +25,26 @@ abstract class ValidationController<K> {
   /// [ValidationConnector.detach]
   void removeConnector(ValidationConnector<K, Object> connector);
 
-  /// Provides [ErrorProvider] with validation error value and stream
+  /// Provides [ErrorProvider] with validation error value
   /// for particular field.
   ///
   /// [ErrorProvider.value] gives sync access to current validation error
   ErrorProvider<K> fieldErrorProvider(K field);
 
+  /// Provides [ErrorsProvider] with validation error value
+  /// for particular field.
+  ///
+  /// [ErrorsProvider.value] gives sync access to current validation errors
+  ErrorsProvider<K> fieldsErrorProvider(Iterable<K> fields);
+
   /// Sync access to the validation error message if there is one
   String fieldError(K field);
+
+  /// Sync access to the validation error message if there is one.
+  ///
+  /// Returns [Iterable] with errors. Will return empty collection
+  /// if no error messages found
+  Iterable<String> fieldsError(Iterable<K> fields);
 
   /// Sync access to current validation error messages
   Map<K, String> get errors;
