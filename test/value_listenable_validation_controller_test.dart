@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/error_provider.dart';
+import 'package:reactive_validator/contracts/errors_provider.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/value_listenable_validation_controller.dart';
 
@@ -38,6 +39,44 @@ void main() {
     expect(provider.field, 'field');
     expect(provider.value, 'value');
     expect(provider.hasError, isTrue);
+
+    controller.dispose();
+  });
+
+  test('should return multiple error provider', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({'field': 'value'});
+    final provider = controller.fieldsErrorProvider(['field', 'field2']);
+
+    expect(provider, isInstanceOf<ErrorsProvider<String>>());
+    expect(provider.fields, ['field', 'field2']);
+    expect(provider.value, ['value']);
+    expect(provider.hasError, isTrue);
+
+    controller.dispose();
+  });
+
+  test('should return error by field', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({'field': 'value'});
+    final error1 = controller.fieldError('field');
+    final error2 = controller.fieldError('field2');
+
+    expect(error1, 'value');
+    expect(error2, isNull);
+
+    controller.dispose();
+  });
+
+  test('should return error by multiple fields', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({
+      'field': 'value',
+      'field2': 'value2'
+    });
+    final errors = controller.fieldsError(['field', 'field3']);
+
+    expect(errors, ['value']);
 
     controller.dispose();
   });
