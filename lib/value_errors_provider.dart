@@ -12,7 +12,7 @@ class ValueErrorsProvider<K> implements ErrorsProvider<K> {
   const ValueErrorsProvider(this.fields, this.value);
 
   @override
-  bool get hasError => value != null;
+  bool get hasError => value.isNotEmpty;
 
   @override
   bool operator ==(Object other) =>
@@ -20,8 +20,10 @@ class ValueErrorsProvider<K> implements ErrorsProvider<K> {
       other is ValueErrorsProvider<K> &&
           runtimeType == other.runtimeType &&
           fieldsComparator.equals(fields, other.fields) &&
-          value == other.value;
+          fieldsComparator.equals(value, other.value);
 
   @override
-  int get hashCode => fieldsComparator.hash(fields) ^ value.hashCode;
+  int get hashCode =>
+      fieldsComparator.hash(fields) ^
+      fieldsComparator.hash(value);
 }
