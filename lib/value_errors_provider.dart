@@ -24,6 +24,5 @@ class ValueErrorsProvider<K> implements ErrorsProvider<K> {
 
   @override
   int get hashCode =>
-      fieldsComparator.hash(fields) ^
-      fieldsComparator.hash(value);
+      fieldsComparator.hash(fields) ^ fieldsComparator.hash(value);
 }
