@@ -1,13 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/stream_error_provider.dart';
 import 'package:reactive_validator/contracts/stream_errors_provider.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/subject_stream_validation_controller.dart';
 
-class MockedConnector extends Mock
-    implements ValidationConnector<String, String> {}
+import 'subject_stream_validation_controller_test.mocks.dart';
 
+@GenerateMocks([], customMocks: [MockSpec<ValidationConnector<String, String>>(as: #MockStringValidationConnector)])
 void main() {
   test('should create empty validation controller', () {
     final controller = SubjectStreamValidationController<String>();
@@ -122,7 +123,7 @@ void main() {
 
   test('should remove connector and clear error field', () {
     final controller = SubjectStreamValidationController<String>(sync: true);
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
 
     controller.addConnector(connector);
 
@@ -139,7 +140,9 @@ void main() {
 
   test('should validate across all connectors', () async {
     final controller = SubjectStreamValidationController<String>(sync: true);
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
+
+    when(connector.detach()).thenReturn(null);
 
     controller.addConnector(connector);
 
@@ -165,7 +168,7 @@ void main() {
     expect(
         controller.errorsStream, isInstanceOf<Stream<Map<String, String>>>());
     expect(
-        controller.fieldErrorStream('field'), isInstanceOf<Stream<String>>());
+        controller.fieldErrorStream('field'), isInstanceOf<Stream<String?>>());
 
     controller.dispose();
   });
@@ -181,7 +184,7 @@ void main() {
   });
 
   test('should attach connectors on create', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = SubjectStreamValidationController<String>(
       connectors: [
         connector,
@@ -194,7 +197,7 @@ void main() {
   });
 
   test('should attach connectors on seeded controller create', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = SubjectStreamValidationController<String>.seeded(
       {},
       connectors: [
@@ -208,7 +211,7 @@ void main() {
   });
 
   test('should attach connectors', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = SubjectStreamValidationController<String>();
 
     controller.attachConnectors([connector]);
@@ -220,8 +223,9 @@ void main() {
 
   test('shouldn\'t remove errors on dispose', () {
     final controller = SubjectStreamValidationController<String>(sync: true);
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
 
+    when(connector.detach()).thenReturn(null);
     controller.addConnector(connector);
 
     when(connector.field).thenReturn('field');

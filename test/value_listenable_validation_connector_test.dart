@@ -1,25 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/contracts/validation_controller.dart';
 import 'package:reactive_validator/contracts/validator.dart';
 import 'package:reactive_validator/value_listenable_validation_connector.dart';
 
-class MockedValidator extends Mock implements Validator<String> {}
+import 'value_listenable_validation_connector_test.mocks.dart';
 
-class MockedController extends Mock implements ValidationController<String> {}
-
-class MockedListenable extends Mock implements ValueListenable<String> {}
-
+@GenerateMocks([ValueListenable, ValidationController, Validator])
 void main() {
   test('should throw error on attach', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
-      valueListenable: MockedListenable(),
+      validator: MockValidator(),
+      valueListenable: MockValueListenable(),
     );
 
     connector.attach(controller);
@@ -28,9 +26,9 @@ void main() {
   });
 
   test('should attach controller', () {
-    final controller = MockedController();
-    final listenable = MockedListenable();
-    final validator = MockedValidator();
+    final controller = MockValidationController<String>();
+    final listenable = MockValueListenable();
+    final validator = MockValidator();
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
@@ -46,9 +44,11 @@ void main() {
   });
 
   test('should attach controller and validate', () {
-    final controller = MockedController();
-    final listenable = MockedListenable();
-    final validator = MockedValidator();
+    final controller = MockValidationController<String>();
+    final listenable = MockValueListenable();
+    final validator = MockValidator<String>();
+
+    when(validator.call(any)).thenReturn(null);
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
@@ -70,20 +70,20 @@ void main() {
   test('should throw error on detach', () {
     final connector = ValueListenableValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
-      valueListenable: MockedListenable(),
+      validator: MockValidator(),
+      valueListenable: MockValueListenable(),
     );
 
     expect(() => connector.detach(), throwsUnsupportedError);
   });
 
   test('should detach', () {
-    final controller = MockedController();
-    final listenable = MockedListenable();
+    final controller = MockValidationController<String>();
+    final listenable = MockValueListenable();
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
+      validator: MockValidator(),
       valueListenable: listenable,
     );
 
@@ -95,9 +95,9 @@ void main() {
   });
 
   test('should clear on change', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final listenable = ValueNotifier('');
-    final validator = MockedValidator();
+    final validator = MockValidator();
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
@@ -115,9 +115,9 @@ void main() {
   });
 
   test('should validate on change', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final listenable = ValueNotifier('');
-    final validator = MockedValidator();
+    final validator = MockValidator();
 
     final connector = ValueListenableValidationConnector(
       field: 'field',
@@ -142,7 +142,7 @@ void main() {
   test('should connect validator to the notifier', () {
     final notifier = ValueNotifier('');
     final connector =
-        notifier.connectValidator(field: 'field', validator: MockedValidator());
+        notifier.connectValidator(field: 'field', validator: MockValidator());
 
     expect(connector, isInstanceOf<ValidationConnector>());
     expect(connector.field, 'field');

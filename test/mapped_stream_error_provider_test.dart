@@ -1,33 +1,35 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:reactive_validator/mapped_stream_error_provider.dart';
 
-class MockedStream extends Mock implements ValueStream<Map<String, String>> {}
+import 'mapped_stream_error_provider_test.mocks.dart';
 
+@GenerateMocks([ValueStream])
 void main() {
   test('should define if error provided', () {
-    final streamWithError = MockedStream();
-    when(streamWithError.value).thenReturn({
+    final streamWithError = MockValueStream<Map<String, String>>();
+    when(streamWithError.valueWrapper).thenReturn(ValueWrapper({
       'field': 'error',
-    });
+    }));
 
     final provider =
         MappedStreamErrorProvider<String>('field', streamWithError);
 
-    expect(provider.hasError, true);
+    expect(provider.hasError, isTrue);
 
-    final stream = MockedStream();
-    when(streamWithError.value).thenReturn({});
+    final stream = MockValueStream<Map<String, String>>();
+    when(stream.valueWrapper).thenReturn(ValueWrapper({}));
 
     final providerWithoutValue =
         MappedStreamErrorProvider<String>('field', stream);
 
-    expect(providerWithoutValue.hasError, false);
+    expect(providerWithoutValue.hasError, isFalse);
   });
 
   test('should compare provider', () {
-    final streamWithError = MockedStream();
+    final streamWithError = MockValueStream<Map<String, String>>();
 
     final provider1 =
         MappedStreamErrorProvider<String>('field', streamWithError);
