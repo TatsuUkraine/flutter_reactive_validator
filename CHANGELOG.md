@@ -1,3 +1,7 @@
+## [2.0.0-nullsafety.0] - 2021-02-28
+
+- migrate to null-safety
+
 ## [1.0.1] - 2020-10-12
 
 - Fixed controller dispose with invalid state
