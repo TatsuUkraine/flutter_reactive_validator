@@ -24,7 +24,7 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
 
   SubjectStreamValidationController({
     bool sync: false,
-    List<ValidationConnector<K, Object>> connectors = const [],
+    List<ValidationConnector<K, dynamic>> connectors = const [],
   })  : _streamController = BehaviorSubject<Map<K, String>>(sync: sync),
         super(connectors);
 
@@ -45,7 +45,7 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
       MappedStreamErrorsProvider<K>(fields, _streamController.stream);
 
   @override
-  Stream<String> fieldErrorStream(K field) =>
+  Stream<String?> fieldErrorStream(K field) =>
       errorsStream.map((errors) => errors[field]);
 
   @override
@@ -56,7 +56,7 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
   Stream<Map<K, String>> get errorsStream => _streamController.stream;
 
   @override
-  Map<K, String> get errors => _streamController.value ?? {};
+  Map<K, String> get errors => _streamController.value ?? const {};
 
   @override
   Stream<bool> get isValidStream =>

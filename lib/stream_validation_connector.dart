@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-
 import 'base_validation_connector.dart';
 import 'contracts/validation_connector.dart';
 import 'contracts/validation_controller.dart';
@@ -47,16 +45,16 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
   /// [StreamValidationConnector.seeded] constructor
   final bool validateOnAttach;
 
-  StreamSubscription<I> _subscription;
+  StreamSubscription<I>? _subscription;
 
-  I _lastValue;
+  I? _lastValue;
   bool _hasValue = false;
 
   /// Creates default connector
   StreamValidationConnector({
-    @required K field,
-    @required this.stream,
-    @required this.validator,
+    required K field,
+    required this.stream,
+    required this.validator,
     this.validateOnChange = false,
     this.clearOnChange = true,
     this.validateOnAttach = false,
@@ -67,10 +65,10 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
 
   /// Creates connector with seeded data
   StreamValidationConnector.seeded({
-    @required K field,
-    @required this.stream,
-    @required this.validator,
-    @required I initialValue,
+    required K field,
+    required this.stream,
+    required this.validator,
+    required I initialValue,
     this.validateOnChange = false,
     this.clearOnChange = true,
     this.validateOnAttach = false,
@@ -99,12 +97,12 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
   }
 
   @override
-  String validate() {
+  String? validate() {
     if (!_hasValue) {
       return null;
     }
 
-    return validator(_lastValue);
+    return validator(_lastValue!);
   }
 
   @override
@@ -121,7 +119,7 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
     _lastValue = value;
 
     if (clearOnChange) {
-      controller.clearFieldError(field);
+      controller!.clearFieldError(field);
     }
 
     if (!validateOnChange) {
@@ -136,8 +134,8 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
 extension StreamConnectorExtention<K, I> on Stream<I> {
   /// Connect validator to the [Stream] object
   ValidationConnector<K, I> connectValidator({
-    @required K field,
-    @required Validator<I> validator,
+    required K field,
+    required Validator<I> validator,
     bool clearOnChange = true,
     bool validateOnChange = false,
     bool validateOnAttach = false,

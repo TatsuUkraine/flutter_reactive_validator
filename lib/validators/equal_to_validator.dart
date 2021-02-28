@@ -2,12 +2,12 @@ import 'field_validator.dart';
 
 /// Checks if value is equal to provided value
 class EqualToValidator<I> extends FieldValidator<I> {
-  final I equalTo;
+  final I? equalTo;
 
   const EqualToValidator(
     this.equalTo, {
-    String fieldName,
-    String message,
+    String? fieldName,
+    String? message,
   }) : super(
           fieldName: fieldName,
           message: message ?? 'should be equal to $equalTo',
@@ -21,5 +21,5 @@ class EqualToValidator<I> extends FieldValidator<I> {
         );
 
   @override
-  bool isValid(I value) => value == equalTo;
+  bool isValid(I? value) => value == equalTo;
 }

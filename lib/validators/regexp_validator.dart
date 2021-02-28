@@ -6,8 +6,8 @@ class RegexpValidator extends FieldValidator<String> {
 
   RegexpValidator(
     this.regExp, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
   }) : super(
           fieldName: fieldName,
           message:
@@ -20,5 +20,5 @@ class RegexpValidator extends FieldValidator<String> {
         );
 
   @override
-  bool isValid(String value) => regExp.hasMatch(value);
+  bool isValid(String? value) => regExp.hasMatch(value!);
 }

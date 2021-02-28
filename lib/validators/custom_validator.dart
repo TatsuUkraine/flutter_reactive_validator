@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
-
 import '../contracts/validator.dart';
 
-typedef bool _Validator<I>(I value);
-typedef String _MessageBuilder<I>(I value);
+typedef _Validator<I> = bool Function(I? value);
+typedef _MessageBuilder<I> = String Function(I? value);
 
 /// Custom validator. Allows to define validation with
 /// [CustomValidator.isValid] callback.
@@ -25,9 +23,9 @@ class CustomValidator<I> implements Validator<I> {
   final bool ignoreNullable;
 
   CustomValidator({
-    String fieldName,
-    @required _MessageBuilder<I> message,
-    @required _Validator<I> isValid,
+    required _MessageBuilder<I> message,
+    required _Validator<I> isValid,
+    String? fieldName,
     bool ignoreNullable = true,
   }) : this.withMessage(
           isValid: isValid,
@@ -36,12 +34,12 @@ class CustomValidator<I> implements Validator<I> {
         );
 
   const CustomValidator.withMessage({
-    @required this.message,
-    @required this.isValid,
+    required this.message,
+    required this.isValid,
     this.ignoreNullable = true,
   });
 
   @override
-  String call(I value) =>
+  String? call(I? value) =>
       ignoreNullable && value == null || isValid(value) ? null : message(value);
 }

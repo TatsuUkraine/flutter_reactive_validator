@@ -8,8 +8,8 @@ class EmailValidator extends FieldValidator<String> {
   final bool allowInternational;
 
   const EmailValidator({
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
     this.allowTopLevelDomains = false,
     this.allowInternational = true,
   }) : super(
@@ -26,6 +26,6 @@ class EmailValidator extends FieldValidator<String> {
         );
 
   @override
-  bool isValid(value) => v.EmailValidator.validate(
-      value, allowTopLevelDomains, allowInternational);
+  bool isValid(String? value) => v.EmailValidator.validate(
+      value!, allowTopLevelDomains, allowInternational);
 }

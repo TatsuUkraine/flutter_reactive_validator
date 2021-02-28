@@ -6,7 +6,7 @@ abstract class ValidationConnector<K, I> {
   K get field;
 
   /// Attached [ValidationController] controller
-  ValidationController<K> get controller;
+  ValidationController<K>? get controller;
 
   /// Attach connector to the validation controller
   void attach(ValidationController<K> controller);
@@ -16,7 +16,7 @@ abstract class ValidationConnector<K, I> {
 
   /// Validate current field value. Returns error message if
   /// current value is invalid
-  String validate();
+  String? validate();
 
   /// Validates field, and pushes result to the [ValidationController]
   void validateField();

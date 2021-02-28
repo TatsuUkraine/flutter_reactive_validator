@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../contracts/validator.dart';
 
 /// Default implementation of [Validator].
@@ -18,23 +16,23 @@ abstract class FieldValidator<I> implements Validator<I> {
   /// Defines [fieldName] and [message] that will be used
   /// to generate validation error message if validation fails.
   const FieldValidator({
-    String fieldName,
-    @required String message,
+    String? fieldName,
+    required String message,
     this.ignoreNullable = true,
   }) : message = '${fieldName ?? 'Field'} $message';
 
   /// Defines full validation message if validation fails.
   const FieldValidator.withMessage({
-    @required this.message,
+    required this.message,
     this.ignoreNullable = true,
-  }) : assert(message != null);
+  });
 
   @override
-  String call(I value) =>
+  String? call(I? value) =>
       ignoreNullable && value == null || isValid(value) ? null : message;
 
   /// Validation function
-  bool isValid(I value);
+  bool isValid(I? value);
 
   @override
   bool operator ==(Object other) =>

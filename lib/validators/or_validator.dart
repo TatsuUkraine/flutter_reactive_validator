@@ -12,13 +12,13 @@ import '../contracts/validator.dart';
 class OrValidator<I> implements Validator<I> {
   final Iterable<Validator<I>> validators;
 
-  const OrValidator(this.validators) : assert(validators != null);
+  const OrValidator(this.validators);
 
   @override
-  String call(I value) {
-    String lastError;
+  String? call(I? value) {
+    String? lastError;
     for (Validator<I> validator in validators) {
-      final String error = validator(value);
+      final String? error = validator(value);
 
       if (error == null) {
         return null;

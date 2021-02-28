@@ -14,8 +14,8 @@ class _ValidationPageState extends State<ValidationPage> {
   final StreamController<RegisterState> _stateController =
       StreamController.broadcast();
 
-  StreamSubscription<RegisterState> _subscription;
-  RegisterState _lastValue;
+  late StreamSubscription<RegisterState> _subscription;
+  RegisterState? _lastValue;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _ValidationPageState extends State<ValidationPage> {
     final now = DateTime.now();
 
     _controller.attachConnectors([
-      StreamValidationConnector<_Fields, String>(
+      StreamValidationConnector<_Fields, String?>(
         field: _Fields.EMAIL,
         stream: _stateController.stream.map((state) => state.email).distinct(),
         validator: const AndValidator(const [
@@ -35,7 +35,7 @@ class _ValidationPageState extends State<ValidationPage> {
           const EmailValidator(),
         ]),
       ),
-      StreamValidationConnector<_Fields, String>(
+      StreamValidationConnector<_Fields, String?>(
         field: _Fields.PASSWORD,
         stream:
             _stateController.stream.map((state) => state.password).distinct(),
@@ -45,7 +45,7 @@ class _ValidationPageState extends State<ValidationPage> {
           const MinCharactersValidator(6),
         ]),
       ),
-      StreamValidationConnector<_Fields, DateTime>(
+      StreamValidationConnector<_Fields, DateTime?>(
         field: _Fields.BIRTHDAY,
         stream:
             _stateController.stream.map((state) => state.birthday).distinct(),
@@ -73,7 +73,7 @@ class _ValidationPageState extends State<ValidationPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: StreamBuilder<String>(
+                child: StreamBuilder<String?>(
                   stream: _controller.fieldErrorStream(_Fields.EMAIL),
                   builder: (context, snapshot) => TextField(
                     decoration: InputDecoration(
@@ -81,7 +81,7 @@ class _ValidationPageState extends State<ValidationPage> {
                       errorText: snapshot.data,
                     ),
                     onChanged: (value) {
-                      _stateController.add(_lastValue.copyWith(
+                      _stateController.add(_lastValue!.copyWith(
                         email: value,
                       ));
                     },
@@ -90,7 +90,7 @@ class _ValidationPageState extends State<ValidationPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: StreamBuilder<String>(
+                child: StreamBuilder<String?>(
                   stream: _controller.fieldErrorStream(_Fields.PASSWORD),
                   builder: (context, snapshot) => TextField(
                     decoration: InputDecoration(
@@ -98,14 +98,14 @@ class _ValidationPageState extends State<ValidationPage> {
                       errorText: snapshot.data,
                     ),
                     onChanged: (value) {
-                      _stateController.add(_lastValue.copyWith(
+                      _stateController.add(_lastValue!.copyWith(
                         password: value,
                       ));
                     },
                   ),
                 ),
               ),
-              StreamBuilder<String>(
+              StreamBuilder<String?>(
                 stream: _controller.fieldErrorStream(_Fields.BIRTHDAY),
                 builder: (context, snapshot) => Row(
                   children: [
@@ -138,7 +138,7 @@ class _ValidationPageState extends State<ValidationPage> {
                               return;
                             }
 
-                            _stateController.add(_lastValue.copyWith(
+                            _stateController.add(_lastValue!.copyWith(
                               birthday: dateTime,
                             ));
                           }),
@@ -146,11 +146,11 @@ class _ValidationPageState extends State<ValidationPage> {
                   ],
                 ),
               ),
-              RaisedButton(
-                  child: Text('Validate'),
-                  onPressed: () {
-                    _controller.validate();
-                  }),
+              ElevatedButton(
+                child: Text('Validate'),
+                onPressed: () {
+                  _controller.validate();
+                }),
             ],
           ),
         ),
@@ -173,16 +173,16 @@ enum _Fields {
 }
 
 class RegisterState {
-  final String email;
-  final String password;
-  final DateTime birthday;
+  final String? email;
+  final String? password;
+  final DateTime? birthday;
 
   RegisterState({this.email, this.password, this.birthday});
 
   RegisterState copyWith({
-    String email,
-    String password,
-    DateTime birthday,
+    String? email,
+    String? password,
+    DateTime? birthday,
   }) =>
       RegisterState(
         email: email ?? this.email,

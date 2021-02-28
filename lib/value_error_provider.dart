@@ -6,7 +6,7 @@ class ValueErrorProvider<K> implements ErrorProvider<K> {
   final K field;
 
   @override
-  final String value;
+  final String? value;
 
   const ValueErrorProvider(this.field, this.value);
 

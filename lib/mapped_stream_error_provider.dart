@@ -12,13 +12,13 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   const MappedStreamErrorProvider(this.field, this._valueStream);
 
   @override
-  String get value => _transform(_valueStream.value);
+  String? get value => _transform(_valueStream.value);
 
   @override
-  bool get hasError => _valueStream.value != null;
+  bool get hasError => value != null;
 
   @override
-  Stream<String> get stream {
+  Stream<String?> get stream {
     if (_valueStream.hasValue) {
       return _valueStream.skip(1).map(_transform);
     }
@@ -27,7 +27,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   }
 
   /// Transformer to find error among error [Map]
-  String _transform(Map<K, String> errors) => (errors ?? {})[field];
+  String? _transform(Map<K, String?>? errors) => (errors ?? {})[field];
 
   @override
   bool operator ==(Object other) =>
