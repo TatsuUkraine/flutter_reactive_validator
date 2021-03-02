@@ -1,3 +1,7 @@
+## [2.0.0] - 2021-03-03
+
+- stable null-safety release
+
 ## [2.0.0-nullsafety.0] - 2021-02-28
 
 - migrate to null-safety
