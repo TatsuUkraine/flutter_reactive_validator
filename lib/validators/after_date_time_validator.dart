@@ -3,12 +3,12 @@ import 'field_validator.dart';
 /// Validates if value is after defined [DateTime]
 class AfterDateTimeValidator extends FieldValidator<DateTime> {
   final DateTime dateTime;
-  final String Function(DateTime) formatter;
+  final String Function(DateTime)? formatter;
 
   AfterDateTimeValidator(
     this.dateTime, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
     this.formatter,
   }) : super(
           fieldName: fieldName,
@@ -21,5 +21,5 @@ class AfterDateTimeValidator extends FieldValidator<DateTime> {
         super.withMessage(message: message);
 
   @override
-  bool isValid(DateTime value) => value.isAfter(dateTime);
+  bool isValid(DateTime? value) => value?.isAfter(dateTime) ?? true;
 }

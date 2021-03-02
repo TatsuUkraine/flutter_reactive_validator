@@ -6,8 +6,8 @@ class LessThanValidator<I extends num> extends FieldValidator<I> {
 
   const LessThanValidator(
     this.max, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
   }) : super(
           fieldName: fieldName,
           message: errorMessage ?? 'should be less than $max',
@@ -19,5 +19,5 @@ class LessThanValidator<I extends num> extends FieldValidator<I> {
         );
 
   @override
-  bool isValid(I value) => value < max;
+  bool isValid(I? value) => value! < max;
 }

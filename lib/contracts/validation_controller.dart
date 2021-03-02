@@ -1,10 +1,11 @@
 import 'error_provider.dart';
+import 'errors_provider.dart';
 import 'validation_connector.dart';
 
 /// Base validation controller interface
 abstract class ValidationController<K> {
   /// Attach multiple [ValidationConnector] to the controller
-  void attachConnectors(Iterable<ValidationConnector<K, Object>> connectors);
+  void attachConnectors(Iterable<ValidationConnector<K, dynamic>> connectors);
 
   /// Add [ValidationConnector] to the active list.
   ///
@@ -13,7 +14,7 @@ abstract class ValidationController<K> {
   ///
   /// To properly add connector use [attachConnectors] or
   /// [ValidationConnector.attach]
-  void addConnector(ValidationConnector<K, Object> connector);
+  void addConnector(ValidationConnector<K, dynamic> connector);
 
   /// Remove [ValidationConnector].
   ///
@@ -22,16 +23,28 @@ abstract class ValidationController<K> {
   ///
   /// To properly remove connector use
   /// [ValidationConnector.detach]
-  void removeConnector(ValidationConnector<K, Object> connector);
+  void removeConnector(ValidationConnector<K, dynamic> connector);
 
-  /// Provides [ErrorProvider] with validation error value and stream
+  /// Provides [ErrorProvider] with validation error value
   /// for particular field.
   ///
   /// [ErrorProvider.value] gives sync access to current validation error
   ErrorProvider<K> fieldErrorProvider(K field);
 
+  /// Provides [ErrorsProvider] with validation errors
+  /// from multiple fields.
+  ///
+  /// [ErrorsProvider.value] gives sync access to current validation errors
+  ErrorsProvider<K> fieldsErrorProvider(Iterable<K> fields);
+
   /// Sync access to the validation error message if there is one
-  String fieldError(K field);
+  String? fieldError(K field);
+
+  /// Sync access to the validation error message if there is any.
+  ///
+  /// Returns [Iterable] with errors among multiple fields.
+  /// Will return empty collection if no error messages found
+  Iterable<String> fieldsError(Iterable<K> fields);
 
   /// Sync access to current validation error messages
   Map<K, String> get errors;

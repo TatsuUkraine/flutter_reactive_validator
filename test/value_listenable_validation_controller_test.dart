@@ -1,12 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/error_provider.dart';
+import 'package:reactive_validator/contracts/errors_provider.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/value_listenable_validation_controller.dart';
 
-class MockedConnector extends Mock
-    implements ValidationConnector<String, String> {}
+import 'value_listenable_validation_controller_test.mocks.dart';
 
+@GenerateMocks([], customMocks: [MockSpec<ValidationConnector<String, String>>(as: #MockStringValidationConnector)])
 void main() {
   test('should create empty validation controller', () {
     final controller = ValueListenableValidationController<String>();
@@ -38,6 +40,44 @@ void main() {
     expect(provider.field, 'field');
     expect(provider.value, 'value');
     expect(provider.hasError, isTrue);
+
+    controller.dispose();
+  });
+
+  test('should return multiple error provider', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({'field': 'value'});
+    final provider = controller.fieldsErrorProvider(['field', 'field2']);
+
+    expect(provider, isInstanceOf<ErrorsProvider<String>>());
+    expect(provider.fields, ['field', 'field2']);
+    expect(provider.value, ['value']);
+    expect(provider.hasError, isTrue);
+
+    controller.dispose();
+  });
+
+  test('should return error by field', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({'field': 'value'});
+    final error1 = controller.fieldError('field');
+    final error2 = controller.fieldError('field2');
+
+    expect(error1, 'value');
+    expect(error2, isNull);
+
+    controller.dispose();
+  });
+
+  test('should return error by multiple fields', () {
+    final controller =
+    ValueListenableValidationController<String>.seeded({
+      'field': 'value',
+      'field2': 'value2'
+    });
+    final errors = controller.fieldsError(['field', 'field3']);
+
+    expect(errors, ['value']);
 
     controller.dispose();
   });
@@ -108,11 +148,11 @@ void main() {
 
   test('should remove connector and clear error field', () {
     final controller = ValueListenableValidationController<String>();
-    final connector = MockedConnector();
-
-    controller.addConnector(connector);
+    final connector = MockStringValidationConnector();
 
     when(connector.field).thenReturn('field');
+
+    controller.addConnector(connector);
 
     controller.addFieldError('field', 'error');
 
@@ -126,12 +166,13 @@ void main() {
 
   test('should validate across all connectors', () async {
     final controller = ValueListenableValidationController<String>();
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
 
     controller.addConnector(connector);
 
     when(connector.field).thenReturn('field');
     when(connector.validate()).thenReturn('error');
+    when(connector.detach()).thenReturn(null);
 
     expect(controller.isValid, isTrue);
 
@@ -146,7 +187,7 @@ void main() {
   });
 
   test('should attach connectors on create', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = ValueListenableValidationController<String>(
       connectors: [
         connector,
@@ -159,7 +200,7 @@ void main() {
   });
 
   test('should attach connectors on seeded controller create', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = ValueListenableValidationController<String>.seeded(
       {},
       connectors: [
@@ -173,7 +214,7 @@ void main() {
   });
 
   test('should attach connectors', () {
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
     final controller = ValueListenableValidationController<String>();
 
     controller.attachConnectors([connector]);
@@ -185,11 +226,12 @@ void main() {
 
   test('shouldn\'t clear error after controller disposed', () {
     final controller = ValueListenableValidationController<String>();
-    final connector = MockedConnector();
+    final connector = MockStringValidationConnector();
 
     controller.addConnector(connector);
 
     when(connector.field).thenReturn('field');
+    when(connector.detach()).thenReturn(null);
 
     controller.addFieldError('field', 'error');
 

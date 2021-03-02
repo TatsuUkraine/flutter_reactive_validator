@@ -1,0 +1,28 @@
+import 'contracts/errors_provider.dart';
+import 'utils.dart';
+
+/// Provides info about field validation
+class ValueErrorsProvider<K> implements ErrorsProvider<K> {
+  @override
+  final Iterable<K> fields;
+
+  @override
+  final Iterable<String> value;
+
+  const ValueErrorsProvider(this.fields, this.value);
+
+  @override
+  bool get hasError => value.isNotEmpty;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ValueErrorsProvider<K> &&
+          runtimeType == other.runtimeType &&
+          fieldsComparator.equals(fields, other.fields) &&
+          fieldsComparator.equals(value, other.value);
+
+  @override
+  int get hashCode =>
+      fieldsComparator.hash(fields) ^ fieldsComparator.hash(value);
+}

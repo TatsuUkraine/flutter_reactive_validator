@@ -6,14 +6,18 @@ export 'contracts/validation_controller.dart';
 export 'contracts/stream_validation_controller.dart';
 export 'contracts/listenable_validation_controller.dart';
 export 'contracts/error_provider.dart';
+export 'contracts/errors_provider.dart';
 export 'contracts/stream_error_provider.dart';
+export 'contracts/stream_errors_provider.dart';
 
 export 'stream_validation_connector.dart';
 export 'value_listenable_validation_connector.dart';
 export 'subject_stream_validation_controller.dart';
 export 'value_listenable_validation_controller.dart';
 export 'value_error_provider.dart';
+export 'value_errors_provider.dart';
 export 'mapped_stream_error_provider.dart';
+export 'mapped_stream_errors_provider.dart';
 
 export 'validators/field_validator.dart';
 export 'validators/custom_validator.dart';

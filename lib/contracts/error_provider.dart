@@ -4,7 +4,7 @@ abstract class ErrorProvider<K> {
   K get field;
 
   /// Current validation error value
-  String get value;
+  String? get value;
 
   /// If provider has an error message
   bool get hasError;

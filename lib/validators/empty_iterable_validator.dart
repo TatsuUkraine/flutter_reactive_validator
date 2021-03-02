@@ -2,7 +2,7 @@ import 'field_validator.dart';
 
 /// Validates if [Iterable] is empty
 class EmptyIterableValidator<I> extends FieldValidator<Iterable<I>> {
-  const EmptyIterableValidator({String fieldName, String message})
+  const EmptyIterableValidator({String? fieldName, String? message})
       : super(
           fieldName: fieldName,
           message: message ?? 'should be empty',
@@ -12,5 +12,5 @@ class EmptyIterableValidator<I> extends FieldValidator<Iterable<I>> {
       : super.withMessage(message: message);
 
   @override
-  bool isValid(Iterable<I> value) => value.isEmpty;
+  bool isValid(Iterable<I>? value) => value?.isEmpty ?? true;
 }

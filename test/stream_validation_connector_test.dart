@@ -1,28 +1,38 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:reactive_validator/contracts/validation_connector.dart';
 import 'package:reactive_validator/contracts/validation_controller.dart';
 import 'package:reactive_validator/contracts/validator.dart';
 import 'package:reactive_validator/stream_validation_connector.dart';
 
-class MockedValidator extends Mock implements Validator<String> {}
+import 'stream_validation_connector_test.mocks.dart';
 
-class MockedController extends Mock implements ValidationController<String> {}
+class MockedStream extends Mock implements Stream<String> {
+  @override
+  StreamSubscription<String> listen(void Function(String event)? onData, {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+    return super.noSuchMethod(
+      Invocation.method(#listen, [onData], {#onError: onError, #onDone: onDone, #cancelOnError: cancelOnError}),
+      returnValue: MockStreamSubscription<String>(),
+      returnValueForMissingStub: MockStreamSubscription<String>(),
+    );
+  }
+}
 
-class MockedStream extends Mock implements Stream<String> {}
+//class MockedSubscription extends Mock implements StreamSubscription<String> {}
 
-class MockedSubscription extends Mock implements StreamSubscription<String> {}
-
+@GenerateMocks([ValidationController, Validator, StreamSubscription, StreamController])
 void main() {
   test('should throw error on attach', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
+    final stream = MockedStream();
 
     final connector = StreamValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
-      stream: MockedStream(),
+      validator: MockValidator<String>(),
+      stream: stream,
     );
 
     connector.attach(controller);
@@ -31,8 +41,8 @@ void main() {
   });
 
   test('should attach controller', () {
-    final controller = MockedController();
-    final validator = MockedValidator();
+    final controller = MockValidationController<String>();
+    final validator = MockValidator<String>();
     final stream = MockedStream();
 
     final connector = StreamValidationConnector(
@@ -49,9 +59,11 @@ void main() {
   });
 
   test('should attach controller and validate', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final stream = MockedStream();
-    final validator = MockedValidator();
+    final validator = MockValidator<String>();
+
+    when(validator.call(any)).thenAnswer((_) => null);
 
     final connector = StreamValidationConnector.seeded(
       field: 'field',
@@ -70,9 +82,9 @@ void main() {
   });
 
   test('shouldn\'t validate if value is empty', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final stream = MockedStream();
-    final validator = MockedValidator();
+    final validator = MockValidator<String>();
 
     final connector = StreamValidationConnector(
       field: 'field',
@@ -90,23 +102,25 @@ void main() {
   });
 
   test('should throw error on detach', () {
+    final stream = MockedStream();
+
     final connector = StreamValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
-      stream: MockedStream(),
+      validator: MockValidator<String>(),
+      stream: stream,
     );
 
     expect(() => connector.detach(), throwsUnsupportedError);
   });
 
   test('should detach', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final stream = MockedStream();
-    final subscription = MockedSubscription();
+    final subscription = MockStreamSubscription<String>();
 
     final connector = StreamValidationConnector(
       field: 'field',
-      validator: MockedValidator(),
+      validator: MockValidator<String>(),
       stream: stream,
     );
 
@@ -120,9 +134,9 @@ void main() {
   });
 
   test('should clear on change', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final stream = StreamController(sync: true);
-    final validator = MockedValidator();
+    final validator = MockValidator<String>();
 
     final connector = StreamValidationConnector(
       field: 'field',
@@ -142,9 +156,9 @@ void main() {
   });
 
   test('should validate on change', () {
-    final controller = MockedController();
+    final controller = MockValidationController<String>();
     final stream = StreamController(sync: true);
-    final validator = MockedValidator();
+    final validator = MockValidator<String>();
 
     final connector = StreamValidationConnector(
       field: 'field',
@@ -171,7 +185,7 @@ void main() {
   test('should connect validator to the notifier', () {
     final controller = StreamController();
     final connector = controller.stream
-        .connectValidator(field: 'field', validator: MockedValidator());
+        .connectValidator(field: 'field', validator: MockValidator<String>());
 
     expect(connector, isInstanceOf<ValidationConnector>());
     expect(connector.field, 'field');

@@ -384,6 +384,14 @@ validate if value is a valid email value.
 Or, if external package validators has right interface signature, you
 can use them as they are.
 
+## Tests
+
+Before run tests, ensure to generate mocks for mockito
+
+```
+flutter pub run build_runner build
+```
+
 ## Changelog
 
 Please see the

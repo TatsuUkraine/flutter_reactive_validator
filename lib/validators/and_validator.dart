@@ -11,12 +11,12 @@ import '../contracts/validator.dart';
 class AndValidator<I> implements Validator<I> {
   final Iterable<Validator<I>> validators;
 
-  const AndValidator(this.validators) : assert(validators != null);
+  const AndValidator(this.validators);
 
   @override
-  String call(I value) {
+  String? call(I? value) {
     for (Validator<I> validator in validators) {
-      final String error = validator(value);
+      final String? error = validator(value);
 
       if (error != null) {
         return error;

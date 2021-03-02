@@ -1,19 +1,25 @@
 import 'package:reactive_validator/reactive_validator.dart';
 
+import 'utils.dart';
+
 /// Base class with common logic for [ValidationController]'s
 abstract class BaseValidationController<K> implements ValidationController<K> {
   bool _disposed = false;
 
   /// Set of connected [ValidationConnector]'s
-  List<ValidationConnector<K, Object>> _connectors = [];
+  List<ValidationConnector<K, dynamic>> _connectors = [];
 
   BaseValidationController(
-      [List<ValidationConnector<K, Object>> connectors = const []]) {
+      [List<ValidationConnector<K, dynamic>> connectors = const []]) {
     attachConnectors(connectors);
   }
 
   @override
-  String fieldError(K field) => errors[field];
+  String? fieldError(K field) => errors[field];
+
+  @override
+  Iterable<String> fieldsError(Iterable<K> fields) =>
+      filterErrors(fields, errors);
 
   @override
   bool get isValid => errors.isEmpty;
@@ -60,7 +66,7 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
         return {
           ...value,
-          result.field: result.error,
+          result.field: result.error!,
         };
       });
     }).then(addErrors);
@@ -78,12 +84,12 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
   }
 
   @override
-  void addConnector(ValidationConnector<K, Object> connector) {
+  void addConnector(ValidationConnector<K, Object?> connector) {
     _connectors.add(connector);
   }
 
   @override
-  void removeConnector(ValidationConnector<K, Object> connector) {
+  void removeConnector(ValidationConnector<K, Object?> connector) {
     _connectors.remove(connector);
 
     if (_disposed) {
@@ -94,7 +100,7 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
   }
 
   @override
-  void attachConnectors(Iterable<ValidationConnector<K, Object>> connectors) {
+  void attachConnectors(Iterable<ValidationConnector<K, Object?>> connectors) {
     connectors.forEach((connector) {
       connector.attach(this);
     });
@@ -107,7 +113,7 @@ class _ValidationResult<K> {
   final K field;
 
   /// Validation error message
-  final String error;
+  final String? error;
 
   _ValidationResult(this.field, this.error);
 

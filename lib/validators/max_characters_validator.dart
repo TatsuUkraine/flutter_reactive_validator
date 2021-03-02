@@ -6,8 +6,8 @@ class MaxCharactersValidator extends FieldValidator<String> {
 
   const MaxCharactersValidator(
     this.max, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
   }) : super(
           fieldName: fieldName,
           message: errorMessage ?? 'can contain maximum $max characters',
@@ -19,5 +19,5 @@ class MaxCharactersValidator extends FieldValidator<String> {
         );
 
   @override
-  bool isValid(String value) => value.length <= max;
+  bool isValid(String? value) => value!.length <= max;
 }

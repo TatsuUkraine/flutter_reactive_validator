@@ -4,14 +4,14 @@ import 'contracts/validation_controller.dart';
 /// Base class with common logic for [ValidationConnector]'s
 abstract class BaseValidationConnector<K, I>
     implements ValidationConnector<K, I> {
-  ValidationController<K> _controller;
+  ValidationController<K>? _controller;
 
   @override
   final K field;
 
   BaseValidationConnector(this.field);
 
-  ValidationController<K> get controller => _controller;
+  ValidationController<K>? get controller => _controller;
 
   @override
   void attach(ValidationController<K> controller) {
@@ -21,7 +21,7 @@ abstract class BaseValidationConnector<K, I>
     }
 
     _controller = controller;
-    _controller.addConnector(this);
+    _controller!.addConnector(this);
   }
 
   @override
@@ -30,7 +30,7 @@ abstract class BaseValidationConnector<K, I>
       throw UnsupportedError('Validator not attached');
     }
 
-    _controller?.removeConnector(this);
+    _controller!.removeConnector(this);
     _controller = null;
   }
 
@@ -40,11 +40,11 @@ abstract class BaseValidationConnector<K, I>
       throw UnsupportedError('Connector should be attached to the controller');
     }
 
-    final String error = validate();
+    final String? error = validate();
     if (error == null) {
-      return _controller.clearFieldError(field);
+      return _controller!.clearFieldError(field);
     }
 
-    _controller.addFieldError(field, error);
+    _controller!.addFieldError(field, error);
   }
 }

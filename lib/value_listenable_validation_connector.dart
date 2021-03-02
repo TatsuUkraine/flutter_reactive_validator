@@ -38,9 +38,9 @@ class ValueListenableValidationConnector<K, I>
 
   /// Creates default connector
   ValueListenableValidationConnector({
-    @required K field,
-    @required this.valueListenable,
-    @required this.validator,
+    required K field,
+    required this.valueListenable,
+    required this.validator,
     this.validateOnChange = false,
     this.clearOnChange = true,
     this.validateOnAttach = false,
@@ -66,11 +66,11 @@ class ValueListenableValidationConnector<K, I>
   }
 
   @override
-  String validate() => validator(valueListenable.value);
+  String? validate() => validator(valueListenable.value);
 
   void _onValueChanged() {
     if (clearOnChange) {
-      controller.clearFieldError(field);
+      controller!.clearFieldError(field);
     }
 
     if (!validateOnChange) {
@@ -85,8 +85,8 @@ class ValueListenableValidationConnector<K, I>
 extension ValueListenableConnectorExtention<K, I> on ValueListenable<I> {
   /// Connect validator to the [ValueListenable] object
   ValidationConnector<K, I> connectValidator({
-    @required K field,
-    @required Validator<I> validator,
+    required K field,
+    required Validator<I> validator,
     bool clearOnChange = true,
     bool validateOnChange = false,
     bool validateOnAttach = false,

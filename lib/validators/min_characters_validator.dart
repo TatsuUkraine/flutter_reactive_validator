@@ -6,8 +6,8 @@ class MinCharactersValidator extends FieldValidator<String> {
 
   const MinCharactersValidator(
     this.min, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
   }) : super(
           fieldName: fieldName,
           message: errorMessage ?? 'should contain minimum $min characters',
@@ -19,5 +19,5 @@ class MinCharactersValidator extends FieldValidator<String> {
         );
 
   @override
-  bool isValid(String value) => value.length >= min;
+  bool isValid(String? value) => value!.length >= min;
 }

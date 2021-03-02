@@ -6,8 +6,8 @@ class GreaterThanValidator<I extends num> extends FieldValidator<I> {
 
   const GreaterThanValidator(
     this.min, {
-    String fieldName,
-    String errorMessage,
+    String? fieldName,
+    String? errorMessage,
   }) : super(
           fieldName: fieldName,
           message: errorMessage ?? 'should be greater than $min',
@@ -19,5 +19,5 @@ class GreaterThanValidator<I extends num> extends FieldValidator<I> {
         );
 
   @override
-  bool isValid(I value) => value > min;
+  bool isValid(I? value) => value! > min;
 }
