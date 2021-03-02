@@ -6,8 +6,7 @@ import 'validation_controller.dart';
 ///
 /// Also overrides defines extended [fieldErrorProvider] methods, that returns
 /// error provider with an error message stream
-abstract class StreamValidationController<K>
-    extends ValidationController<K> {
+abstract class StreamValidationController<K> extends ValidationController<K> {
   /// Provides [Stream] with validation errors for particular field
   Stream<String?> fieldErrorStream(K field);
 

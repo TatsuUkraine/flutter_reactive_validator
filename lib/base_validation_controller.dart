@@ -59,17 +59,17 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
           () => _ValidationResult<K>(connector.field, connector.validate()));
     }).toList())
         .then((collection) {
-          return collection.fold<Map<K, String>>({}, (value, result) {
-            if (!result.hasError) {
-              return value;
-            }
+      return collection.fold<Map<K, String>>({}, (value, result) {
+        if (!result.hasError) {
+          return value;
+        }
 
-            return {
-              ...value,
-              result.field: result.error!,
-            };
-          });
-        }).then(addErrors);
+        return {
+          ...value,
+          result.field: result.error!,
+        };
+      });
+    }).then(addErrors);
   }
 
   @override
