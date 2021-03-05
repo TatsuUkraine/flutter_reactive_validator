@@ -1,3 +1,7 @@
+## [2.0.1] - 2021-03-05
+
+- fix nullable value cast
+
 ## [2.0.0] - 2021-03-03
 
 - stable null-safety release
