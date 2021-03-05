@@ -21,8 +21,6 @@ class MockedStream extends Mock implements Stream<String> {
   }
 }
 
-//class MockedSubscription extends Mock implements StreamSubscription<String> {}
-
 @GenerateMocks([ValidationController, Validator, StreamSubscription, StreamController])
 void main() {
   test('should throw error on attach', () {
@@ -191,5 +189,23 @@ void main() {
     expect(connector.field, 'field');
 
     controller.close();
+  });
+
+  test('should validate nullable value', () {
+    final stream = MockedStream();
+    final validator = MockValidator<String>();
+
+    when(validator.call(any)).thenAnswer((_) => null);
+
+    final connector = StreamValidationConnector.seeded(
+      field: 'field',
+      validator: validator,
+      stream: stream,
+      initialValue: null,
+    );
+
+    connector.validate();
+
+    verify(validator.call(null)).called(1);
   });
 }

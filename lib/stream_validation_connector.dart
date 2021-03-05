@@ -102,7 +102,7 @@ class StreamValidationConnector<K, I> extends BaseValidationConnector<K, I>
       return null;
     }
 
-    return validator(_lastValue!);
+    return validator(_lastValue);
   }
 
   @override
