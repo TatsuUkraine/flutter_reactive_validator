@@ -1,3 +1,7 @@
+## [2.0.1+1] - 2021-04-19
+
+- add missing export
+
 ## [2.0.1] - 2021-03-05
 
 - fix nullable value cast
