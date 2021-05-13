@@ -56,7 +56,7 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
   Stream<Map<K, String>> get errorsStream => _streamController.stream;
 
   @override
-  Map<K, String> get errors => _streamController.value ?? const {};
+  Map<K, String> get errors => _streamController.valueOrNull ?? const {};
 
   @override
   Stream<bool> get isValidStream =>
