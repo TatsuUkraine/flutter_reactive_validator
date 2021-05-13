@@ -1,3 +1,8 @@
+## [2.0.2] - 2021-05-13
+
+- change RxDart min max version
+- make compatible with RxDart 0.27
+
 ## [2.0.1+1] - 2021-04-19
 
 - add missing export
