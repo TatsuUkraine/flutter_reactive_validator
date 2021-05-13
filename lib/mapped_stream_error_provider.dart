@@ -12,7 +12,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   const MappedStreamErrorProvider(this.field, this._valueStream);
 
   @override
-  String? get value => _transform(_valueStream.value);
+  String? get value => _transform(_valueStream.valueOrNull);
 
   @override
   bool get hasError => value != null;

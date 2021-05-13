@@ -10,9 +10,9 @@ import 'mapped_stream_error_provider_test.mocks.dart';
 void main() {
   test('should define if error provided', () {
     final streamWithError = MockValueStream<Map<String, String>>();
-    when(streamWithError.valueWrapper).thenReturn(ValueWrapper({
+    when(streamWithError.valueOrNull).thenReturn({
       'field': 'error',
-    }));
+    });
 
     final provider =
         MappedStreamErrorProvider<String>('field', streamWithError);
@@ -20,7 +20,7 @@ void main() {
     expect(provider.hasError, isTrue);
 
     final stream = MockValueStream<Map<String, String>>();
-    when(stream.valueWrapper).thenReturn(ValueWrapper({}));
+    when(stream.valueOrNull).thenReturn({});
 
     final providerWithoutValue =
         MappedStreamErrorProvider<String>('field', stream);
