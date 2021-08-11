@@ -19,13 +19,7 @@ class MappedStreamErrorsProvider<K> implements StreamErrorsProvider<K> {
   bool get hasError => value.isNotEmpty;
 
   @override
-  Stream<Iterable<String>> get stream {
-    if (_valueStream.hasValue) {
-      return _valueStream.skip(1).map(_transform);
-    }
-
-    return _valueStream.map(_transform);
-  }
+  Stream<Iterable<String>> get stream => _valueStream.map(_transform);
 
   /// Transformer to find error among error [Map]
   Iterable<String> _transform(Map<K, String>? errors) =>

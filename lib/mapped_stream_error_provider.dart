@@ -18,13 +18,7 @@ class MappedStreamErrorProvider<K> implements StreamErrorProvider<K> {
   bool get hasError => value != null;
 
   @override
-  Stream<String?> get stream {
-    if (_valueStream.hasValue) {
-      return _valueStream.skip(1).map(_transform);
-    }
-
-    return _valueStream.map(_transform);
-  }
+  Stream<String?> get stream => _valueStream.map(_transform);
 
   /// Transformer to find error among error [Map]
   String? _transform(Map<K, String?>? errors) => (errors ?? {})[field];

@@ -132,9 +132,8 @@ Also, this implementation provides you extended `ErrorProvider` that
 contains reference to the stream with a field error.
 
 **Note** Since `SubjectStreamValidationController` uses
-`BehaviorSubject` from the RxDart, `StreamErrorProvider` also ensures
-that provided stream won't emit value as soon as anyone subscribes on
-it.
+`BehaviorSubject` from the RxDart, stream from `StreamErrorProvider` will emit a value
+as soon as you subscribe to it.
 
 ## Validation connectors
 

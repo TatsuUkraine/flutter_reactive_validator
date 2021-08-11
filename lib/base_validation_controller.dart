@@ -29,10 +29,6 @@ abstract class BaseValidationController<K> implements ValidationController<K> {
 
   @override
   void clearFieldError(K field) {
-    if (!errors.containsKey(field)) {
-      return;
-    }
-
     addErrors({...errors}..remove(field));
   }
 
