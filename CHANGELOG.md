@@ -1,3 +1,8 @@
+## [2.0.3] - 2021-08-11
+
+- remove stream event skip if value present
+- fix error provide if only valid validation happened during the error request
+
 ## [2.0.2] - 2021-05-13
 
 - change RxDart min max version

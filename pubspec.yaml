@@ -2,7 +2,7 @@ name: reactive_validator
 description: >-
   Type safe validation controller with base validators.
   Allows to manage validation state manually or validate when reactive value changes.
-version: 2.0.2
+version: 2.0.3
 homepage: https://github.com/TatsuUkraine/flutter_reactive_validator
 repository: https://github.com/TatsuUkraine/flutter_reactive_validator
 issue_tracker: https://github.com/TatsuUkraine/flutter_reactive_validator/issues
