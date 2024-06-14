@@ -1,3 +1,8 @@
+## [3.0.0] - 2024-06-14
+
+- change RxDart max version
+- update Dart SDK
+
 ## [2.0.3] - 2021-08-11
 
 - remove stream event skip if value present
