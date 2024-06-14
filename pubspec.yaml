@@ -8,13 +8,13 @@ repository: https://github.com/TatsuUkraine/flutter_reactive_validator
 issue_tracker: https://github.com/TatsuUkraine/flutter_reactive_validator/issues
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  rxdart: ">=0.27.0 <0.28.0"
+  rxdart: ">=0.27.0 <0.29.0"
   email_validator: ">=2.0.0 <3.0.0"
   collection: ">=1.15.0 <2.0.0"
 
@@ -22,7 +22,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ">=5.0.0 <6.0.0"
-  build_runner: ">=1.11.2 <2.0.0"
+  build_runner: ">=2.0.0 <3.0.0"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
