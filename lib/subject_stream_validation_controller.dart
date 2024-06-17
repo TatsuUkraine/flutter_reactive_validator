@@ -23,14 +23,14 @@ class SubjectStreamValidationController<K> extends BaseValidationController<K>
   final BehaviorSubject<Map<K, String>> _streamController;
 
   SubjectStreamValidationController({
-    bool sync: false,
+    bool sync = false,
     List<ValidationConnector<K, dynamic>> connectors = const [],
   })  : _streamController = BehaviorSubject<Map<K, String>>(sync: sync),
         super(connectors);
 
   SubjectStreamValidationController.seeded(
     Map<K, String> errors, {
-    bool sync: false,
+    bool sync = false,
     List<ValidationConnector<K, Object>> connectors = const [],
   })  : _streamController =
             BehaviorSubject<Map<K, String>>.seeded(errors, sync: sync),
