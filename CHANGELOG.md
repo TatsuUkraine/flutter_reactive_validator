@@ -1,4 +1,4 @@
-## [3.0.0] - 2024-06-14
+## [3.0.0] - 2024-06-17
 
 - change RxDart max version
 - update Dart SDK
