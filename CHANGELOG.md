@@ -1,3 +1,7 @@
+## [4.0.0] - 2024-09-06
+
+- update email validator version to v3
+
 ## [3.0.0] - 2024-06-17
 
 - change RxDart max version
